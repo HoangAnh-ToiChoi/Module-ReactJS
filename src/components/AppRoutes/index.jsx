@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import DefaultLayout from "~/layouts/DefaultLayout";
 
 //Pages
-import Home from "~/pages/home";
+import Home from "~/pages/Home";
 
 function AppRoutes() {
   return (

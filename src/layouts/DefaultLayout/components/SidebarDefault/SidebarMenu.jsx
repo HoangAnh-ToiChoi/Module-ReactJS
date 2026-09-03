@@ -10,7 +10,7 @@ function SidebarMenu() {
 
   const classNameActive = (tabName) =>
     clsx(
-      "flex w-full cursor-pointer items-center gap-3.5 rounded-2xl  px-4 py-3 text-[15px] transition-colors",
+      "flex w-full cursor-pointer items-center gap-3.5 rounded-2xl  px-4 py-2 text-[15px] transition-colors",
       {
         "bg-[#222222] font-semibold text-white": activeTab === tabName,
         "transition-colors hover:bg-[#1f1f1f]": activeTab !== tabName,
