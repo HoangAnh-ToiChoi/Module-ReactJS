@@ -18,7 +18,7 @@ function SidebarMenu() {
     );
 
   const getPath = (id) => {
-    id === "for-you" ? "/" : `/${id}`;
+    return id === "for-you" ? "/" : `/${id}`;
   };
 
   const renderMenuItems = (item) => {
@@ -36,7 +36,7 @@ function SidebarMenu() {
   };
 
   return (
-    <div className="flex flex-col">
+    <nav className="flex flex-col">
       <AppLogo />
 
       <div className="flex flex-col gap-1">
@@ -56,7 +56,7 @@ function SidebarMenu() {
         </div>
         {MENU_BLOCK_3.map(renderMenuItems)}
       </div>
-    </div>
+    </nav>
   );
 }
 
