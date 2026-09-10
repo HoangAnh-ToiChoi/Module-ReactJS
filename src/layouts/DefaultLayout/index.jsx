@@ -7,7 +7,7 @@ function DefaultLayout() {
     <div className="flex min-h-screen bg-[#101010] text-white">
       <SidebarDefault />
 
-      <div className="flex-1 p-6">
+      <div className="flex-1">
         <FeedHeader />
 
         <main>

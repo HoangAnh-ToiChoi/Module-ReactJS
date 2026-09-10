@@ -10,9 +10,13 @@ import Login from "~/pages/Auth/Login";
 import Register from "~/pages/Auth/Register";
 import ForgotPassword from "~/pages/Auth/ForgotPassword";
 
+// Components
+import AuthProvider from "~/components/AuthProvider";
+
 function AppRoutes() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <AuthProvider />
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route index element={<Home />}></Route>
