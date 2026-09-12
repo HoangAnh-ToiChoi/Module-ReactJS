@@ -6,15 +6,15 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [
-        react(),
-        babel({ presets: [reactCompilerPreset()] }),
-        tailwindcss(),
-    ],
-    base: "/Module-ReactJS/",
-    resolve: {
-        alias: {
-            "~": fileURLToPath(new URL("./src", import.meta.url)),
-        },
+  plugins: [
+    react(),
+    babel({ presets: [reactCompilerPreset()] }),
+    tailwindcss(),
+  ],
+  // base: "/Module-ReactJS/",
+  resolve: {
+    alias: {
+      "~": fileURLToPath(new URL("./src", import.meta.url)),
     },
+  },
 });

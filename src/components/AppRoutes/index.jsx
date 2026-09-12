@@ -9,13 +9,14 @@ import Home from "~/pages/Home";
 import Login from "~/pages/Auth/Login";
 import Register from "~/pages/Auth/Register";
 import ForgotPassword from "~/pages/Auth/ForgotPassword";
+import ResetPassword from "~/pages/Auth/ResetPassword";
 
 // Components
 import AuthProvider from "~/components/AuthProvider";
 
 function AppRoutes() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter>
       <AuthProvider />
       <Routes>
         <Route element={<DefaultLayout />}>
@@ -26,6 +27,7 @@ function AppRoutes() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
+          <Route path="/reset-password" element={<ResetPassword />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

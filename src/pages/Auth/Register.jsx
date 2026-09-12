@@ -11,12 +11,13 @@ import {
   register as AuthRegister,
   infoUser,
 } from "~/service/AuthService/AuthService";
+import Loading from "~/components/Loading";
 
 function Register() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setError,
   } = useForm({
     defaultValues: {
@@ -59,8 +60,14 @@ function Register() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="relative flex w-full max-w-[400px] flex-col gap-4 rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
+      className="relative flex w-full max-w-[400px] flex-col gap-4 overflow-hidden rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
     >
+      {isSubmitting && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#181818]/80 backdrop-blur-xs">
+          <Loading>Đang đăng ký...</Loading>
+        </div>
+      )}
+
       <Link
         to="/"
         className="absolute top-5 right-5 text-neutral-400 transition-colors hover:text-white"
@@ -145,31 +152,19 @@ function Register() {
 
       <Button
         type="submit"
-        className="mt-2 w-full rounded-xl bg-white py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200 active:scale-[0.98]"
+        disabled={isSubmitting}
+        className="mt-2 w-full rounded-xl bg-white py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
       >
         Đăng ký
       </Button>
 
       <Link
-        to="/forgotpassword"
-        className="mt-1 text-center text-[13px] text-neutral-400 transition-colors hover:text-white"
+        to="/login"
+        className="my-3.5 text-center text-[14px] text-neutral-300 transition-colors hover:text-white"
       >
-        Quên mật khẩu?
-      </Link>
-
-      <div className="my-1 flex items-center">
-        <div className="flex-1 border-t border-[#2a2a2a]"></div>
-        <span className="px-3 text-[12px] text-neutral-500">hoặc</span>
-        <div className="flex-1 border-t border-[#2a2a2a]"></div>
-      </div>
-
-      <Link
-        to="/register"
-        className="text-center text-[14px] text-neutral-300 transition-colors hover:text-white"
-      >
-        Chưa có tài khoản?{" "}
+        Bạn đã có tài khoản?{" "}
         <span className="font-semibold text-white underline-offset-4 hover:underline">
-          Đăng ký
+          Đăng nhập ngay
         </span>
       </Link>
     </form>

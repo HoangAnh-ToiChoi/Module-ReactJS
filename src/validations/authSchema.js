@@ -16,3 +16,17 @@ export const registerSchema = z
     message: "Mật khẩu không khớp",
     path: ["password_confirmation"],
   });
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().min(1, "Vui lòng nhập Email!"),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    password: z.string().min(8, "Mật khẩu tối thiểu phải 8 ký tự"),
+    password_confirmation: z.string().min(1, "Vui lòng nhập lại mật khẩu"),
+  })
+  .refine((data) => data.password === data.password_confirmation, {
+    message: "Mật khẩu không khớp",
+    path: ["password_confirmation"],
+  });

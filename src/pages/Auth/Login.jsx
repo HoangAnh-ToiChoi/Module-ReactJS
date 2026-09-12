@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { loginSchema } from "~/validations/authSchema";
@@ -31,6 +31,9 @@ function Login() {
   const navigate = useNavigate();
   const dispacth = useDispatch();
   const currentUser = useSelectorUser();
+  const location = useLocation();
+
+  const successMessage = location.state?.message;
 
   useEffect(() => {
     if (currentUser) {
@@ -76,6 +79,12 @@ function Login() {
           Sử dụng email và mật khẩu của bạn để tiếp tục
         </p>
       </div>
+
+      {successMessage && (
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3.5 py-2.5 text-center text-[13px] text-emerald-400">
+          {successMessage}
+        </div>
+      )}
 
       <div className="flex flex-col gap-1">
         <Input
