@@ -1,56 +1,85 @@
 import {
   Avatar,
-  AvatarBadge,
   AvatarFallback,
   AvatarImage,
 } from "~/components/ui/avatar";
-import { MoreHorizontal } from "lucide-react";
-import { PlusIcon } from "lucide-react";
-
+import { MoreHorizontal, Plus } from "lucide-react";
 import InteractionBar from "./InteractionBar";
+import { formatRelativeTime } from "~/utils/format";
 
-function PostCard(post) {
+function PostCard({ post }) {
+  if (!post) return null;
+
+  const user = post.user || {};
+  const username = user.username || user.name || "nguoidung";
+  const avatarUrl = user.avatar_url || "https://github.com/shadcn.png";
+  const mediaUrls = Array.isArray(post.media_urls) ? post.media_urls : [];
+
   return (
-    // Bài viết Threads: nền đen #101010, viền phân cách dưới border-b #222222, padding 16px
-    <article className="mx-auto w-full max-w-[620px] border-b border-[#222222] bg-[#101010] px-4 py-3 text-white transition-colors hover:bg-[#141414]">
-      {/* Bố cục 2 cột chuẩn Threads: Cột trái (Avatar) - Cột phải (Toàn bộ nội dung) */}
+    <article className="mx-auto w-full max-w-[620px] border-b border-[#222222] bg-[#101010] px-4 py-3 text-white transition-colors hover:bg-[#121212]">
       <div className="flex items-start gap-3">
-        {/* CỘT TRÁI: Avatar kèm huy hiệu nút + follow */}
         <div className="relative shrink-0">
-          <Avatar className="h-10 w-10">
-            <AvatarImage
-              src="https://github.com/pranathip.png"
-              alt="@solarwr03"
-            />
-            <AvatarFallback>USER</AvatarFallback>
-            <PlusIcon className="absolute -right-0.5 -bottom-0.5 z-10 h-4 w-4 cursor-pointer rounded-full bg-white stroke-[3] p-[2px] text-black ring-2 ring-[#101010] transition-transform hover:scale-110" />
+          <Avatar className="h-10 w-10 cursor-pointer">
+            <AvatarImage src={avatarUrl} alt={username} />
+            <AvatarFallback className="bg-neutral-800 font-semibold text-white">
+              {(username[0] || "U").toUpperCase()}
+            </AvatarFallback>
           </Avatar>
+
+          <button
+            type="button"
+            title="Theo dõi"
+            className="absolute -right-0.5 -bottom-0.5 z-10 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-white text-black ring-2 ring-[#101010] transition-transform hover:scale-110 active:scale-95"
+          >
+            <Plus className="h-3 w-3 stroke-[3]" />
+          </button>
         </div>
 
-        {/* CỘT PHẢI: Thông tin tác giả, bài viết, hành động */}
         <div className="min-w-0 flex-1">
-          {/* Dòng Header: Tên người dùng + Thời gian + Nút menu 3 chấm */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <span className="cursor-pointer text-[15px] font-semibold text-white hover:underline">
-                solarwr03
+                {username}
               </span>
-              <span className="text-[14px] text-neutral-500">22 giờ</span>
+              <span className="text-neutral-500">·</span>
+              <span className="text-[14px] text-neutral-500">
+                {formatRelativeTime(post.created_at)}
+              </span>
             </div>
 
-            {/* Nút 3 chấm */}
-            <button className="cursor-pointer p-1 text-neutral-500 transition-colors hover:text-white">
+            <button
+              type="button"
+              className="cursor-pointer rounded-full p-1 text-neutral-500 transition-colors hover:bg-neutral-800 hover:text-white"
+            >
               <MoreHorizontal className="h-4 w-4" />
             </button>
           </div>
 
-          {/* Nội dung bài viết */}
-          <div className="mt-1 text-[15px] leading-relaxed text-[#f3f5f7]">
-            <p></p>
-          </div>
+          {post.content && (
+            <div className="mt-1 text-[15px] leading-relaxed text-[#f3f5f7]">
+              <p className="whitespace-pre-line">{post.content}</p>
+            </div>
+          )}
 
-          {/* Hàng nút tương tác: Tim, Bình luận, Repost, Chia sẻ */}
-          <InteractionBar />
+          {mediaUrls.length > 0 && (
+            <div className="mt-2.5 overflow-hidden rounded-2xl border border-[#262626]">
+              {mediaUrls.map((url, index) => (
+                <img
+                  key={index}
+                  src={url}
+                  alt={`media-${index}`}
+                  loading="lazy"
+                  className="max-h-[500px] w-full object-cover"
+                />
+              ))}
+            </div>
+          )}
+
+          <InteractionBar
+            likesCount={post.likes_count}
+            repliesCount={post.replies_count}
+            repostsCount={post.reposts_and_quotes_count}
+          />
         </div>
       </div>
     </article>

@@ -6,7 +6,7 @@ import { useSelectorUser } from "~/features/Auth/Hook";
 function FeedHeader() {
   const currentUser = useSelectorUser();
   return (
-    <header className="flex items-center justify-end border-b border-[#222222] px-4 py-8">
+    <header className="sticky top-0 z-40 flex items-center justify-end border-b border-[#222222] bg-[#101010] px-4 py-8">
       <NavLink
         to="/"
         className="absolute left-1/2 -translate-x-1/2 text-[16px] font-bold text-white transition-transform hover:scale-110"
