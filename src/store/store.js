@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
-import authReducer from "~/features/Auth/AuthSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
+import authReducer from "~/features/Auth/AuthSlice";
+import postReducer from "~/features/Post/PostSilce";
 
 const logger = createLogger();
 
@@ -16,6 +18,7 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    post: postReducer,
   },
   middleware: (getDefaultMiddleware) => {
     const middlewareList = getDefaultMiddleware({

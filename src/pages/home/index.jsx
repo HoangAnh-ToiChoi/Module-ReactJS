@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Loading from "~/components/Loading";
 
 import PostCard from "~/components/Post/PostCard";
+import { useSelectorPost } from "~/features/Post/Hook";
 import { useInfiniteScroll } from "~/hooks/useInfiniteScroll";
 import { getFeed } from "~/service/PostService/PostService";
 
 function Home() {
-  const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasmore] = useState(true);
   const [isFetching, setFetching] = useState(false);
+  const posts = useSelectorPost();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchPosts(page);
@@ -18,15 +21,14 @@ function Home() {
   const fetchPosts = async (currentPage) => {
     setFetching(true);
     try {
-      const post = await getFeed({ page: currentPage });
-      if (!post || post.length === 0) {
+      const newPosts = await dispatch(getFeed({ page: currentPage })).unwrap();
+      if (!newPosts || newPosts.length === 0) {
         setHasmore(false);
       } else {
-        setPosts((prev) => [...prev, ...post]);
-        if (post.length < 20) setHasmore(false);
+        if (newPosts.length < 20) setHasmore(false);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       setFetching(false);
     }

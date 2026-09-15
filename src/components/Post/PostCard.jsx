@@ -1,8 +1,4 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "~/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { MoreHorizontal, Plus } from "lucide-react";
 import InteractionBar from "./InteractionBar";
 import { formatRelativeTime } from "~/utils/format";
@@ -76,6 +72,10 @@ function PostCard({ post }) {
           )}
 
           <InteractionBar
+            postId={post.id}
+            post={post}
+            isLiked={post.is_liked_by_auth}
+            isReposted={post.is_reposted_by_auth}
             likesCount={post.likes_count}
             repliesCount={post.replies_count}
             repostsCount={post.reposts_and_quotes_count}
