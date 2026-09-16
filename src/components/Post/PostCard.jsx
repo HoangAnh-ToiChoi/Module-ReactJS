@@ -71,15 +71,7 @@ function PostCard({ post }) {
             </div>
           )}
 
-          <InteractionBar
-            postId={post.id}
-            post={post}
-            isLiked={post.is_liked_by_auth}
-            isReposted={post.is_reposted_by_auth}
-            likesCount={post.likes_count}
-            repliesCount={post.replies_count}
-            repostsCount={post.reposts_and_quotes_count}
-          />
+          <InteractionBar post={post} repliesCount={post.replies_count} />
         </div>
       </div>
     </article>

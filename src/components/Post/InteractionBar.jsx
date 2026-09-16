@@ -10,28 +10,29 @@ import { useEffect, useRef, useState } from "react";
 import { useToggleActive } from "~/hooks/useToggleActive";
 import {
   likePost,
-  quotePost,
   repost as repostPost,
 } from "~/service/PostService/PostService";
 import { formatCount } from "~/utils/format";
-import QuoteModal from "./QuoteModal";
+import CommentModal from "./Modals/CommentModal";
+import CopyImageModal from "./Modals/CopyImageModal";
+import QuoteModal from "./Modals/QuoteModal";
+import ShareModal from "./Modals/ShareModal";
 
-function InteractionBar({
-  likesCount = 0,
-  repliesCount = 0,
-  repostsCount = 0,
-  postId,
-  isLiked = false,
-  isReposted = false,
-  post,
-}) {
-  const like = useToggleActive(isLiked, likesCount, () => likePost(postId));
-  const repost = useToggleActive(isReposted, repostsCount, () =>
-    repostPost(postId),
+function InteractionBar({ repliesCount = 0, post }) {
+  const like = useToggleActive(post.is_liked_by_auth, post.likes_count, () =>
+    likePost(post.id),
+  );
+  const repost = useToggleActive(
+    post.is_reposted_by_auth,
+    post.replies_count,
+    () => repostPost(post.id),
   );
 
   const [isOpenMenu, setOpenMenu] = useState(false);
-  const [isOpneModal, setOpneModal] = useState(false);
+  const [isOpenRepostModal, setIsOpenRepostModal] = useState(false);
+  const [isOpenCommentModal, setIsOpenCommentModal] = useState(false);
+  const [isOpenShareModal, setIsOpenShareModal] = useState(false);
+  const [isOpenCopyImageModal, setIsOpenCopyImageModal] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -54,7 +55,12 @@ function InteractionBar({
 
   const handleQuoteModal = () => {
     setOpenMenu(false);
-    setOpneModal(true);
+    setIsOpenRepostModal(true);
+  };
+
+  const handleOpenCopyImageModal = () => {
+    setIsOpenShareModal(false);
+    setIsOpenCopyImageModal(true);
   };
 
   return (
@@ -73,14 +79,16 @@ function InteractionBar({
         )}
       </button>
 
-      <button className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-sky-400">
+      <button
+        className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-sky-400"
+        onClick={() => setIsOpenCommentModal(true)}
+      >
         <MessageCircle className="h-[19px] w-[19px]" />
         {repliesCount > 0 && (
           <span className="text-[13px]">{formatCount(repliesCount)}</span>
         )}
       </button>
 
-      {/* Nút Đăng lại & Menu bám dính */}
       <div className="relative" ref={menuRef}>
         <button
           type="button"
@@ -100,41 +108,64 @@ function InteractionBar({
           )}
         </button>
 
-        {/* Menu mọc ra bám ngay trên đầu nút bấm */}
         {isOpenMenu && (
           <div
             className="absolute bottom-full left-0 z-50 mb-2 w-44 overflow-hidden rounded-2xl border border-[#333333] bg-[#242424] p-1.5 shadow-2xl shadow-black/80"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Lựa chọn 1: Đăng lại */}
             <button
               type="button"
-              className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-white transition-colors hover:bg-[#323232]"
+              className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232]"
               onClick={handleRepost}
             >
               <span>{repost.Active ? "Xoá đăng lại" : "Đăng lại"}</span>
-              <Repeat2 className="h-4 w-4 text-white" />
+              <Repeat2 className="h-4 w-4 text-[#f3f5f7]" />
             </button>
 
-            {/* Lựa chọn 2: Trích dẫn */}
             <button
               type="button"
-              className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-white transition-colors hover:bg-[#323232]"
+              className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232]"
               onClick={handleQuoteModal}
             >
               <span>Trích dẫn</span>
-              <MessageSquareQuote className="h-4 w-4 text-white" />
+              <MessageSquareQuote className="h-4 w-4 text-[#f3f5f7]" />
             </button>
           </div>
         )}
       </div>
-      {isOpneModal && (
-        <QuoteModal post={post} onClose={() => setOpneModal(false)} />
+
+      {isOpenRepostModal && (
+        <QuoteModal post={post} onClose={() => setIsOpenRepostModal(false)} />
       )}
 
-      <button className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-white">
+      {isOpenCommentModal && (
+        <CommentModal
+          post={post}
+          onClose={() => setIsOpenCommentModal(false)}
+        />
+      )}
+
+      <button
+        onClick={() => setIsOpenShareModal(true)}
+        className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-white"
+      >
         <Send className="h-[18px] w-[18px]" />
       </button>
+
+      {isOpenShareModal && (
+        <ShareModal
+          post={post}
+          onClose={() => setIsOpenShareModal(false)}
+          onOpenCopyImageModal={handleOpenCopyImageModal}
+        />
+      )}
+
+      {isOpenCopyImageModal && (
+        <CopyImageModal
+          post={post}
+          onClose={() => setIsOpenCopyImageModal(false)}
+        />
+      )}
     </div>
   );
 }
