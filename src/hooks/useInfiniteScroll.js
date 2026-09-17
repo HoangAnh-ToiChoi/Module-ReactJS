@@ -20,7 +20,7 @@ export function useInfiniteScroll(callback, hasMore, isFetching) {
           }
         },
         {
-          rootMargin: "1600px",
+          rootMargin: "2400px",
         },
       );
 

@@ -15,7 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { MOCK_FRIENDS } from "~/data/mockFriends";
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 
-function ShareModal({ post, onClose, onOpenCopyImageModal }) {
+function ShareModal({ post, onClose, onOpenCopyImageModal, onOpenEmbedModal }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showNotice, setShowNotice] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -26,7 +26,7 @@ function ShareModal({ post, onClose, onOpenCopyImageModal }) {
 
   const handleCopyLink = async () => {
     const username = post?.user?.username || "user";
-    const postUrl = `${window.location.origin}/${username}/post/${post?.id || "1"}`;
+    const postUrl = `${window.location.origin}/${username}/post/${post?.id}`;
     setCopyError(null);
     try {
       const isSuccess = await copy(postUrl);
@@ -84,6 +84,12 @@ function ShareModal({ post, onClose, onOpenCopyImageModal }) {
         </div>
 
         <div className="flex-1 overflow-y-auto overscroll-contain px-6 py-4">
+          {copyError && (
+            <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-[13.5px] text-red-400">
+              {copyError}
+            </div>
+          )}
+
           <div className="flex items-center gap-3 rounded-full border border-[#262626] bg-[#121212] px-4 py-2.5 text-neutral-400 focus-within:border-neutral-500 focus-within:text-white">
             <Search className="h-4 w-4 shrink-0 text-neutral-500" />
             <input
@@ -197,6 +203,7 @@ function ShareModal({ post, onClose, onOpenCopyImageModal }) {
             <button
               type="button"
               className="group flex cursor-pointer flex-col items-center gap-2"
+              onClick={onOpenEmbedModal}
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#2e2e2e] bg-[#1e1e1e] text-white transition-transform group-hover:bg-[#282828] active:scale-95">
                 <Globe className="h-6 w-6" />

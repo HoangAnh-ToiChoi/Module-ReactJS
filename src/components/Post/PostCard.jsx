@@ -1,24 +1,30 @@
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { useRef, useState } from "react";
 import { MoreHorizontal, Plus } from "lucide-react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import InteractionBar from "./InteractionBar";
 import { formatRelativeTime } from "~/utils/format";
+import PostMenu from "./components/PostMenu";
+import useAutoPosition from "~/hooks/useAutoPosition";
 
 function PostCard({ post }) {
-  if (!post) return null;
-
-  const user = post.user || {};
-  const username = user.username || user.name || "nguoidung";
-  const avatarUrl = user.avatar_url || "https://github.com/shadcn.png";
-  const mediaUrls = Array.isArray(post.media_urls) ? post.media_urls : [];
+  const [openMenu, setOpenMenu] = useState(false);
+  const buttonRef = useRef(null);
+  const placeMent = useAutoPosition(openMenu, buttonRef);
 
   return (
     <article className="mx-auto w-full max-w-[620px] border-b border-[#222222] bg-[#101010] px-4 py-3 text-white transition-colors hover:bg-[#121212]">
       <div className="flex items-start gap-3">
         <div className="relative shrink-0">
           <Avatar className="h-10 w-10 cursor-pointer">
-            <AvatarImage src={avatarUrl} alt={username} />
+            <AvatarImage
+              src={post.user?.avatar_url || "https://github.com/shadcn.png"}
+              alt={post.user?.username || post.user?.name || "nguoidung"}
+            />
             <AvatarFallback className="bg-neutral-800 font-semibold text-white">
-              {(username[0] || "U").toUpperCase()}
+              {(
+                (post.user?.username || post.user?.name || "U")[0] || "U"
+              ).toUpperCase()}
             </AvatarFallback>
           </Avatar>
 
@@ -35,7 +41,7 @@ function PostCard({ post }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <span className="cursor-pointer text-[15px] font-semibold text-white hover:underline">
-                {username}
+                {post.user?.username || post.user?.name || "nguoidung"}
               </span>
               <span className="text-neutral-500">·</span>
               <span className="text-[14px] text-neutral-500">
@@ -43,12 +49,23 @@ function PostCard({ post }) {
               </span>
             </div>
 
-            <button
-              type="button"
-              className="cursor-pointer rounded-full p-1 text-neutral-500 transition-colors hover:bg-neutral-800 hover:text-white"
-            >
-              <MoreHorizontal className="h-4 w-4" />
-            </button>
+            <div className="relative">
+              <button
+                type="button"
+                className="cursor-pointer rounded-full p-1 text-neutral-500 transition-colors hover:bg-neutral-800 hover:text-white"
+                onClick={() => setOpenMenu((prev) => !prev)}
+                ref={buttonRef}
+              >
+                <MoreHorizontal className="h-4 w-4" />
+              </button>
+              {openMenu && (
+                <PostMenu
+                  post={post}
+                  onClose={() => setOpenMenu(false)}
+                  placement={placeMent}
+                />
+              )}
+            </div>
           </div>
 
           {post.content && (
@@ -57,9 +74,9 @@ function PostCard({ post }) {
             </div>
           )}
 
-          {mediaUrls.length > 0 && (
+          {Array.isArray(post.media_urls) && post.media_urls.length > 0 && (
             <div className="mt-2.5 overflow-hidden rounded-2xl border border-[#262626]">
-              {mediaUrls.map((url, index) => (
+              {post.media_urls.map((url, index) => (
                 <img
                   key={index}
                   src={url}

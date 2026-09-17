@@ -44,3 +44,52 @@ export const quotePost = async (id, data) => {
     throw e;
   }
 };
+
+export const savePost = async (id, data) => {
+  try {
+    const response = await http.post(`api/posts/${id}/save`, data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const hidePost = async (id, data) => {
+  try {
+    const response = await http.post(`/api/posts/${id}/hide`, data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const reportPost = async (id, data) => {
+  try {
+    const response = await http.post(`/api/posts/${id}/report`, data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const muteUser = async (id, data) => {
+  try {
+    const response = await http.post(`/api/users/${id}/mute`, data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const blockUser = async (id, data) => {
+  try {
+    const response = await http.post(`/api/users/${id}/block`, data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const editPost = async () => {};
+
+export const delPost = async () => {};

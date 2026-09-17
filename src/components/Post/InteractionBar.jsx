@@ -13,10 +13,13 @@ import {
   repost as repostPost,
 } from "~/service/PostService/PostService";
 import { formatCount } from "~/utils/format";
-import CommentModal from "./Modals/CommentModal";
-import CopyImageModal from "./Modals/CopyImageModal";
-import QuoteModal from "./Modals/QuoteModal";
-import ShareModal from "./Modals/ShareModal";
+import CommentModal from "./components/Modals/CommentModal";
+import CopyImageModal from "./components/Modals/CopyImageModal";
+import QuoteModal from "./components/Modals/QuoteModal";
+import ShareModal from "./components/Modals/ShareModal";
+import EmbedModal from "./components/Modals/EmbedModal";
+import { cn } from "~/lib/utils";
+import useAutoPosition from "~/hooks/useAutoPosition";
 
 function InteractionBar({ repliesCount = 0, post }) {
   const like = useToggleActive(post.is_liked_by_auth, post.likes_count, () =>
@@ -33,7 +36,9 @@ function InteractionBar({ repliesCount = 0, post }) {
   const [isOpenCommentModal, setIsOpenCommentModal] = useState(false);
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [isOpenCopyImageModal, setIsOpenCopyImageModal] = useState(false);
+  const [isOpenEmbedModal, setisOpenEmbedModal] = useState(false);
   const menuRef = useRef(null);
+  const placeMent = useAutoPosition(isOpenMenu, menuRef, 90);
 
   useEffect(() => {
     if (!isOpenMenu) return;
@@ -61,6 +66,11 @@ function InteractionBar({ repliesCount = 0, post }) {
   const handleOpenCopyImageModal = () => {
     setIsOpenShareModal(false);
     setIsOpenCopyImageModal(true);
+  };
+
+  const handleOpenEmbedModal = () => {
+    setIsOpenShareModal(false);
+    setisOpenEmbedModal(true);
   };
 
   return (
@@ -110,7 +120,12 @@ function InteractionBar({ repliesCount = 0, post }) {
 
         {isOpenMenu && (
           <div
-            className="absolute bottom-full left-0 z-50 mb-2 w-44 overflow-hidden rounded-2xl border border-[#333333] bg-[#242424] p-1.5 shadow-2xl shadow-black/80"
+            className={cn(
+              "animate-in fade-in-0 zoom-in-95 absolute left-0 z-50 w-44 overflow-hidden rounded-2xl border border-[#333333] bg-[#242424] p-1.5 shadow-2xl shadow-black/80 duration-150",
+              placeMent === "top"
+                ? "bottom-full mb-2 origin-bottom-left"
+                : "top-full mt-2 origin-top-left",
+            )}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -157,6 +172,7 @@ function InteractionBar({ repliesCount = 0, post }) {
           post={post}
           onClose={() => setIsOpenShareModal(false)}
           onOpenCopyImageModal={handleOpenCopyImageModal}
+          onOpenEmbedModal={handleOpenEmbedModal}
         />
       )}
 
@@ -165,6 +181,10 @@ function InteractionBar({ repliesCount = 0, post }) {
           post={post}
           onClose={() => setIsOpenCopyImageModal(false)}
         />
+      )}
+
+      {isOpenEmbedModal && (
+        <EmbedModal post={post} onClose={() => setisOpenEmbedModal(false)} />
       )}
     </div>
   );
