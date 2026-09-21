@@ -1,10 +1,9 @@
 import { toPng } from "html-to-image";
 import { Download, Share2, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
-import { formatRelativeTime } from "~/utils/format";
+import PostPreviewContent from "./PostPreviewContent";
 
 function CopyImageModal({ post, onClose }) {
   const postPreviewRef = useRef(null);
@@ -12,7 +11,6 @@ function CopyImageModal({ post, onClose }) {
   const [error, setError] = useState(null);
   useLockBodyScroll();
 
-  const authorName = post?.user?.name || post?.user?.username || "nguoidung";
   const username = post?.user?.username || "nguoidung";
 
   const handleDownloadImg = async () => {
@@ -84,55 +82,13 @@ function CopyImageModal({ post, onClose }) {
             ref={postPreviewRef}
             className="relative overflow-hidden rounded-3xl border border-[#2a2a2a] bg-gradient-to-b from-[#1c1c1c] via-[#141414] to-[#101010] p-6 text-white shadow-2xl"
           >
-            <div className="flex items-center gap-3">
-              <Avatar className="h-11 w-11 shrink-0">
-                <AvatarImage
-                  src={
-                    post?.user?.avatar_url || "https://github.com/shadcn.png"
-                  }
-                  alt={username}
-                  className="object-cover"
-                />
-                <AvatarFallback className="bg-neutral-800 text-base font-semibold text-white">
-                  {username[0]?.toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-[15px] font-bold text-white">
-                    {authorName}
-                  </span>
-                  {post?.created_at && (
-                    <span className="text-[13px] text-neutral-500">
-                      · {formatRelativeTime(post.created_at)}
-                    </span>
-                  )}
-                </div>
-                <span className="text-[13px] text-neutral-400">
-                  @{username}
-                </span>
-              </div>
-            </div>
-
-            {post?.content && (
-              <p className="mt-4 text-[15px] leading-relaxed whitespace-pre-line text-[#f3f5f7]">
-                {post.content}
-              </p>
-            )}
-
-            {post?.media_urls?.length > 0 && (
-              <div className="mt-4 overflow-hidden rounded-2xl border border-[#282828]">
-                {post.media_urls.map((url, index) => (
-                  <img
-                    key={index}
-                    src={url}
-                    alt={`media-${index}`}
-                    className="max-h-[360px] w-full object-cover"
-                  />
-                ))}
-              </div>
-            )}
+            <PostPreviewContent
+              post={post}
+              showUsernameSubtitle={true}
+              avatarSize="h-11 w-11"
+              mediaMaxHeight="max-h-[360px]"
+              contentClassName="mt-4 text-[15px] leading-relaxed text-[#f3f5f7]"
+            />
 
             <div className="mt-6 flex items-center justify-between border-t border-[#262626] pt-4 text-[12px] text-neutral-500">
               <div className="flex items-center gap-1.5 font-semibold text-white">

@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { useSelectorUser } from "~/features/Auth/Hook";
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
-import { formatRelativeTime } from "~/utils/format";
+import PostPreviewContent from "./PostPreviewContent";
 
 function CommentModal({ post, onClose, onSubmit }) {
   const authUser = useSelectorUser();
@@ -92,65 +92,11 @@ function CommentModal({ post, onClose, onSubmit }) {
             </div>
           )}
 
-          <div className="flex items-start gap-3">
-            <div className="flex flex-col items-center">
-              <Avatar className="h-10 w-10 shrink-0 cursor-pointer">
-                <AvatarImage
-                  src={
-                    post?.user?.avatar_url || "https://github.com/shadcn.png"
-                  }
-                  alt={authorName}
-                />
-                <AvatarFallback className="bg-neutral-800 font-semibold text-white">
-                  {authorName[0]?.toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-
-              <div className="my-1.5 min-h-[32px] w-[2px] flex-1 rounded-full bg-[#333333]" />
-            </div>
-
-            <div className="min-w-0 flex-1 pb-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-[15px] font-semibold text-white">
-                    {authorName}
-                  </span>
-                  {post?.created_at && (
-                    <span className="text-[13px] text-neutral-500">
-                      {formatRelativeTime(post.created_at)}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {post?.content && (
-                <p className="mt-1 text-[15px] leading-relaxed text-[#f3f5f7]">
-                  {post.content}
-                </p>
-              )}
-
-              {post?.media_urls?.length > 0 && (
-                <div className="mt-2 overflow-hidden rounded-2xl border border-[#262626]">
-                  {post.media_urls.map((url, index) => (
-                    <img
-                      key={index}
-                      src={url}
-                      alt={`media-${index}`}
-                      loading="lazy"
-                      className="max-h-[200px] w-full object-cover"
-                    />
-                  ))}
-                </div>
-              )}
-
-              <p className="mt-2.5 text-[13px] text-neutral-500">
-                Đang trả lời{" "}
-                <span className="text-sky-500 hover:underline">
-                  @{authorName}
-                </span>
-              </p>
-            </div>
-          </div>
+          <PostPreviewContent
+            post={post}
+            showLine={true}
+            showReplyTo={true}
+          />
 
           <div className="flex items-start gap-3 pt-1">
             <Avatar className="h-10 w-10 shrink-0 cursor-pointer">

@@ -3,6 +3,7 @@ import { Check, Heart, MessageCircle, Repeat2, Send, X } from "lucide-react";
 import { useState } from "react";
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 import { formatCount } from "~/utils/format";
+import PostPreviewContent from "./PostPreviewContent";
 
 function EmbedModal({ post, onClose }) {
   const [copied, setCopied] = useState(false);
@@ -77,24 +78,12 @@ function EmbedModal({ post, onClose }) {
           )}
 
           <div className="overflow-hidden rounded-2xl bg-white p-5 text-black shadow-md">
-            {post?.content && (
-              <p className="text-[15px] leading-relaxed whitespace-pre-line text-neutral-900">
-                {post.content}
-              </p>
-            )}
-
-            {post?.media_urls?.length > 0 && (
-              <div className="mt-3 overflow-hidden rounded-xl">
-                {post.media_urls.map((url, index) => (
-                  <img
-                    key={index}
-                    src={url}
-                    alt={`media-${index}`}
-                    className="max-h-[380px] w-full rounded-xl object-cover"
-                  />
-                ))}
-              </div>
-            )}
+            <PostPreviewContent
+              post={post}
+              authorClassName="text-neutral-900 font-bold"
+              contentClassName="mt-1 text-[15px] leading-relaxed text-neutral-900"
+              mediaMaxHeight="max-h-[380px]"
+            />
 
             <div className="mt-4 text-[13px] text-neutral-500">
               {formattedDate}

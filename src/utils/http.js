@@ -13,7 +13,7 @@ const _send = async (url, method, data, config) => {
       data,
     });
 
-    return response.data.data;
+    return response.data?.data ?? response.data;
   } catch (error) {
     throw error.response?.data ?? { message: error.message };
   }

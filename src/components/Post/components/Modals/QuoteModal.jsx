@@ -18,7 +18,7 @@ import { useSelectorUser } from "~/features/Auth/Hook";
 import { addPost } from "~/features/Post/PostSilce";
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 import { quotePost } from "~/service/PostService/PostService";
-import { formatRelativeTime } from "~/utils/format";
+import PostPreviewContent from "./PostPreviewContent";
 
 function QuoteModal({ post, onClose }) {
   const authUser = useSelectorUser();
@@ -185,50 +185,12 @@ function QuoteModal({ post, onClose }) {
               </div>
 
               <div className="mt-4 overflow-hidden rounded-2xl border border-[#2e2e2e] bg-[#171717] p-4 text-white">
-                <div className="flex items-center gap-2.5">
-                  <Avatar className="h-6 w-6 shrink-0">
-                    <AvatarImage
-                      src={
-                        post?.user?.avatar_url ||
-                        "https://github.com/shadcn.png"
-                      }
-                      alt={post?.user?.username}
-                    />
-                    <AvatarFallback className="bg-neutral-800 text-[11px] font-semibold text-white">
-                      {(post?.user?.username ||
-                        post?.user?.name ||
-                        "U")[0].toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="cursor-pointer text-[14px] font-semibold text-white hover:underline">
-                    {post?.user?.username || post?.user?.name || "nguoidung"}
-                  </span>
-                  {post?.created_at && (
-                    <span className="text-[13px] text-neutral-500">
-                      · {formatRelativeTime(post.created_at)}
-                    </span>
-                  )}
-                </div>
-
-                {post?.content && (
-                  <p className="mt-2 text-[14px] leading-relaxed whitespace-pre-line text-[#f3f5f7]">
-                    {post.content}
-                  </p>
-                )}
-
-                {post?.media_urls?.length > 0 && (
-                  <div className="mt-3 overflow-hidden rounded-2xl border border-[#262626]">
-                    {post.media_urls.map((url, index) => (
-                      <img
-                        key={index}
-                        src={url}
-                        alt={`media-${index}`}
-                        loading="lazy"
-                        className="max-h-[360px] w-full object-cover"
-                      />
-                    ))}
-                  </div>
-                )}
+                <PostPreviewContent
+                  post={post}
+                  avatarSize="h-6 w-6"
+                  mediaMaxHeight="max-h-[360px]"
+                  contentClassName="mt-2 text-[14px] leading-relaxed text-[#f3f5f7]"
+                />
               </div>
             </div>
           </div>

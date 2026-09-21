@@ -90,6 +90,12 @@ export const blockUser = async (id, data) => {
   }
 };
 
-export const editPost = async () => {};
+export const editPost = async (id, data) => {
+  try {
+    const resposne = await http.post(`api/posts/${id}`, data);
+  } catch (e) {
+    throw e;
+  }
+};
 
 export const delPost = async () => {};

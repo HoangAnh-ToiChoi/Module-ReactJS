@@ -6,11 +6,46 @@ import InteractionBar from "./InteractionBar";
 import { formatRelativeTime } from "~/utils/format";
 import PostMenu from "./components/PostMenu";
 import useAutoPosition from "~/hooks/useAutoPosition";
+import ReportModal from "./components/Modals/ReportModal";
+import EditPostModal from "./components/Modals/EditPostModal";
 
-function PostCard({ post }) {
+function PostCard({
+  post,
+  user,
+  onSavePost,
+  onHidePost,
+  onReportPost,
+  onEdit,
+}) {
   const [openMenu, setOpenMenu] = useState(false);
+  const [openReportMenu, setOpenReportMenu] = useState(false);
+  const [openEditModal, setOpenEidtModal] = useState(false);
   const buttonRef = useRef(null);
   const placeMent = useAutoPosition(openMenu, buttonRef);
+
+  const handleSave = async () => {
+    setOpenMenu(false);
+    await onSavePost(post.id);
+  };
+  const handlhide = async () => {
+    setOpenMenu(false);
+    await onHidePost(post.id);
+  };
+
+  const handleOpenReportMenu = () => {
+    setOpenMenu(false);
+    setOpenReportMenu(true);
+  };
+
+  const handleReportPost = (key, reason) => {
+    onReportPost(post.id, key, reason);
+    setOpenReportMenu(false);
+  };
+
+  const handleEditPost = async () => {
+    setOpenMenu(false);
+    setOpenEidtModal(true);
+  };
 
   return (
     <article className="mx-auto w-full max-w-[620px] border-b border-[#222222] bg-[#101010] px-4 py-3 text-white transition-colors hover:bg-[#121212]">
@@ -61,11 +96,25 @@ function PostCard({ post }) {
               {openMenu && (
                 <PostMenu
                   post={post}
+                  user={user}
                   onClose={() => setOpenMenu(false)}
                   placement={placeMent}
+                  onSave={handleSave}
+                  onHide={handlhide}
+                  onReport={handleOpenReportMenu}
+                  onEdit={handleEditPost}
                 />
               )}
             </div>
+            {openReportMenu && (
+              <ReportModal
+                onClose={() => setOpenReportMenu(false)}
+                onSubmitReport={handleReportPost}
+              />
+            )}
+            {openEditModal && (
+              <EditPostModal onClose={() => setOpenEidtModal(false)} />
+            )}
           </div>
 
           {post.content && (

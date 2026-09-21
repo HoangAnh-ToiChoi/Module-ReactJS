@@ -12,6 +12,15 @@ const PostSlice = createSlice({
     addPost: (state, action) => {
       state.posts.unshift(action.payload);
     },
+    toggleSavePost: (state, action) => {
+      const targetPost = state.posts.find((p) => p.id === action.payload);
+      if (targetPost) {
+        targetPost.is_saved_by_auth = !targetPost.is_saved_by_auth;
+      }
+    },
+    HidePostSuccess: (state, action) => {
+      state.posts = state.posts.filter((p) => p.id !== action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getFeed.fulfilled, (state, action) => {
@@ -31,5 +40,5 @@ const PostSlice = createSlice({
     });
   },
 });
-export const { addPost } = PostSlice.actions;
+export const { addPost, toggleSavePost, HidePostSuccess } = PostSlice.actions;
 export default PostSlice.reducer;
