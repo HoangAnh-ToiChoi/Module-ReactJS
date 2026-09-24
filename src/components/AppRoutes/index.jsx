@@ -19,7 +19,7 @@ import AuthProvider from "~/components/AuthProvider";
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AuthProvider />
       <Routes>
         <Route element={<DefaultLayout />}>
