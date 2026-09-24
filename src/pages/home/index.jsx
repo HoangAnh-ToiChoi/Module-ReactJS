@@ -6,9 +6,16 @@ import PostCard from "~/components/Post/PostCard";
 import ReportSuccessModal from "~/components/Post/components/Modals/ReportSuccessModal";
 import { useSelectorUser } from "~/features/Auth/Hook";
 import { useSelectorPost } from "~/features/Post/Hook";
-import { HidePostSuccess, toggleSavePost } from "~/features/Post/PostSilce";
+import {
+  DelPostSuccess,
+  HidePostSuccess,
+  toggleSavePost,
+  UpdatePostSuccess,
+} from "~/features/Post/PostSilce";
 import { useInfiniteScroll } from "~/hooks/useInfiniteScroll";
 import {
+  delPost,
+  editPost,
   getFeed,
   hidePost,
   reportPost,
@@ -101,6 +108,27 @@ function Home() {
     }
   };
 
+  const handleEditPost = async (postId, data) => {
+    try {
+      const res = await editPost(postId, data);
+      if (res) {
+        dispatch(UpdatePostSuccess(res));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDelPost = async (postId, data) => {
+    try {
+      const res = await delPost(postId, data);
+      dispatch(DelPostSuccess(postId));
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className="mx-auto max-w-[620px] pb-10">
       {reportModalConfig.isOpen && (
@@ -123,6 +151,8 @@ function Home() {
                 onSavePost={handleSavePost}
                 onHidePost={handleHidePost}
                 onReportPost={handleReportPost}
+                onEdit={handleEditPost}
+                onDelete={handleDelPost}
               />
             </div>
           );
@@ -135,6 +165,8 @@ function Home() {
             onSavePost={handleSavePost}
             onHidePost={handleHidePost}
             onReportPost={handleReportPost}
+            onEdit={handleEditPost}
+            onDelete={handleDelPost}
           />
         );
       })}

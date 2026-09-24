@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 import { Button } from "@base-ui/react/button";
 import { Input } from "@base-ui/react/input";
@@ -19,6 +20,7 @@ function Register() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    reset,
   } = useForm({
     defaultValues: {
       username: "",
@@ -31,19 +33,20 @@ function Register() {
 
   const navigate = useNavigate();
   const dispacth = useDispatch();
+  const [successMessage, setSuccessMessage] = useState(false);
 
   const onSubmit = async (data) => {
+    setSuccessMessage(false);
     try {
-      const { access_token, refresh_token } = await AuthRegister(data);
-      if (access_token) {
-        localStorage.setItem("accessToken", access_token);
-        localStorage.setItem("refreshToken", refresh_token);
-        dispacth(infoUser());
-        navigate("/");
-      }
+      await AuthRegister(data);
+      setSuccessMessage(true);
+      reset();
     } catch (e) {
-      if (e?.errors) {
-        Object.entries(e.errors).forEach(([field, messages]) => {
+      const serverErrors = e?.errors || e?.response?.data?.errors;
+      const message = e?.message || e?.response?.data?.message;
+
+      if (serverErrors) {
+        Object.entries(serverErrors).forEach(([field, messages]) => {
           setError(field, {
             type: "server",
             message: Array.isArray(messages) ? messages[0] : messages,
@@ -51,7 +54,7 @@ function Register() {
         });
       } else {
         setError("root", {
-          message: e?.message || "Đăng ký thất bại, vui lòng thử lại sau!",
+          message: message || "Đăng ký thất bại, vui lòng thử lại sau!",
         });
       }
     }
@@ -83,6 +86,12 @@ function Register() {
           Nhập đầy đủ thông tin của bạn để tiếp tục
         </p>
       </div>
+
+      {successMessage && (
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3.5 py-2.5 text-center text-[13px] text-emerald-400">
+          Đăng ký thành công. Hãy kiểm tra email để xác thực
+        </div>
+      )}
 
       <div className="flex flex-col gap-1">
         <Input

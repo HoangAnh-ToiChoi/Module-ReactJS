@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { loginSchema } from "~/validations/authSchema";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Login as AuthLogin,
@@ -32,14 +32,11 @@ function Login() {
   const dispacth = useDispatch();
   const currentUser = useSelectorUser();
   const location = useLocation();
-
-  const successMessage = location.state?.message;
+  const [successMessage, setSuccessMessage] = useState(false);
 
   useEffect(() => {
-    if (currentUser) {
-      navigate("/");
-    }
-  }, [currentUser, navigate]);
+    if (location?.state?.verified) setSuccessMessage(true);
+  }, [location?.state?.verified]);
 
   const onSubmit = async (data) => {
     try {
@@ -81,8 +78,8 @@ function Login() {
       </div>
 
       {successMessage && (
-        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3.5 py-2.5 text-center text-[13px] text-emerald-400">
-          {successMessage}
+        <div className="rounded-xl border-emerald-500/20 bg-emerald-500/10 px-3.5 py-2.5 text-center text-[13px] text-emerald-400">
+          Xác thực email thành công. Bây giờ bạn có thể đăng nhập
         </div>
       )}
 

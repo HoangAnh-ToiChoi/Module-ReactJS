@@ -76,9 +76,7 @@ function PostPreviewContent({
         {showReplyTo && (
           <p className="mt-2.5 text-[13px] text-neutral-500">
             Đang trả lời{" "}
-            <span className="text-sky-500 hover:underline">
-              @{authorName}
-            </span>
+            <span className="text-sky-500 hover:underline">@{authorName}</span>
           </p>
         )}
       </div>

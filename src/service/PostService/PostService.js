@@ -92,10 +92,46 @@ export const blockUser = async (id, data) => {
 
 export const editPost = async (id, data) => {
   try {
-    const resposne = await http.post(`api/posts/${id}`, data);
+    const response = await http.post(`api/posts/${id}`, data);
+    return response;
   } catch (e) {
     throw e;
   }
 };
 
-export const delPost = async () => {};
+export const delPost = async (id, data) => {
+  try {
+    const response = await http.post(`api/posts/${id}`, data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getFeedSingle = async (id) => {
+  try {
+    const response = await http.get(`api/posts/${id}`);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getComment = async (id) => {
+  try {
+    const response = await http.get(`api/posts/${id}/replies`);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const postComment = async (id, data) => {
+  try {
+    const response = await http.post(`/api/posts/${id}/reply`, data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+

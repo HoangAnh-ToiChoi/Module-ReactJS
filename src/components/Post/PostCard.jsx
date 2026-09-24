@@ -8,6 +8,7 @@ import PostMenu from "./components/PostMenu";
 import useAutoPosition from "~/hooks/useAutoPosition";
 import ReportModal from "./components/Modals/ReportModal";
 import EditPostModal from "./components/Modals/EditPostModal";
+import DeleteModal from "./components/Modals/DeleteModal";
 
 function PostCard({
   post,
@@ -16,10 +17,12 @@ function PostCard({
   onHidePost,
   onReportPost,
   onEdit,
+  onDelete,
 }) {
   const [openMenu, setOpenMenu] = useState(false);
   const [openReportMenu, setOpenReportMenu] = useState(false);
   const [openEditModal, setOpenEidtModal] = useState(false);
+  const [openDeltModal, setOpeDeltModal] = useState(false);
   const buttonRef = useRef(null);
   const placeMent = useAutoPosition(openMenu, buttonRef);
 
@@ -42,9 +45,14 @@ function PostCard({
     setOpenReportMenu(false);
   };
 
-  const handleEditPost = async () => {
+  const handleEditPost = () => {
     setOpenMenu(false);
     setOpenEidtModal(true);
+  };
+
+  const handleDelPost = () => {
+    setOpenMenu(false);
+    setOpeDeltModal(true);
   };
 
   return (
@@ -103,6 +111,7 @@ function PostCard({
                   onHide={handlhide}
                   onReport={handleOpenReportMenu}
                   onEdit={handleEditPost}
+                  onDelete={handleDelPost}
                 />
               )}
             </div>
@@ -113,9 +122,21 @@ function PostCard({
               />
             )}
             {openEditModal && (
-              <EditPostModal onClose={() => setOpenEidtModal(false)} />
+              <EditPostModal
+                post={post}
+                onClose={() => setOpenEidtModal(false)}
+                onSubmit={onEdit}
+              />
             )}
           </div>
+
+          {openDeltModal && (
+            <DeleteModal
+              post={post}
+              onClose={() => setOpeDeltModal(false)}
+              onSubmit={onDelete}
+            />
+          )}
 
           {post.content && (
             <div className="mt-1 text-[15px] leading-relaxed text-[#f3f5f7]">

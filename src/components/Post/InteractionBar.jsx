@@ -1,4 +1,5 @@
 import {
+  ChevronRight,
   Heart,
   MessageCircle,
   MessageSquareQuote,
@@ -6,22 +7,48 @@ import {
   Send,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router";
 
 import { useToggleActive } from "~/hooks/useToggleActive";
 import {
   likePost,
+  postComment,
   repost as repostPost,
 } from "~/service/PostService/PostService";
+import { incrementRepliesCount } from "~/features/Post/PostSilce";
 import { formatCount } from "~/utils/format";
 import CommentModal from "./components/Modals/CommentModal";
 import CopyImageModal from "./components/Modals/CopyImageModal";
 import QuoteModal from "./components/Modals/QuoteModal";
 import ShareModal from "./components/Modals/ShareModal";
 import EmbedModal from "./components/Modals/EmbedModal";
+import NotificationModal from "./components/Modals/NotificationModal";
 import { cn } from "~/lib/utils";
 import useAutoPosition from "~/hooks/useAutoPosition";
+import { useSelectorUser } from "~/features/Auth/Hook";
 
 function InteractionBar({ repliesCount = 0, post }) {
+  const dispatch = useDispatch();
+  const currentUser = useSelectorUser();
+  const isAuth = Boolean(currentUser || localStorage.getItem("accessToken"));
+
+  const [isOpenMenu, setOpenMenu] = useState(false);
+  const [isOpenRepostModal, setIsOpenRepostModal] = useState(false);
+  const [isOpenCommentModal, setIsOpenCommentModal] = useState(false);
+  const [isOpenShareModal, setIsOpenShareModal] = useState(false);
+  const [isOpenCopyImageModal, setIsOpenCopyImageModal] = useState(false);
+  const [isOpenEmbedModal, setisOpenEmbedModal] = useState(false);
+  const [isOpenInfoModal, setIsOpenInfoModal] = useState(false);
+  const [modalType, setModalType] = useState("");
+  const menuRef = useRef(null);
+  const placeMent = useAutoPosition(isOpenMenu, menuRef, 90);
+
+  const triggerAuthModal = (type) => {
+    setModalType(type);
+    setIsOpenInfoModal(true);
+  };
+
   const like = useToggleActive(post.is_liked_by_auth, post.likes_count, () =>
     likePost(post.id),
   );
@@ -30,15 +57,6 @@ function InteractionBar({ repliesCount = 0, post }) {
     post.replies_count,
     () => repostPost(post.id),
   );
-
-  const [isOpenMenu, setOpenMenu] = useState(false);
-  const [isOpenRepostModal, setIsOpenRepostModal] = useState(false);
-  const [isOpenCommentModal, setIsOpenCommentModal] = useState(false);
-  const [isOpenShareModal, setIsOpenShareModal] = useState(false);
-  const [isOpenCopyImageModal, setIsOpenCopyImageModal] = useState(false);
-  const [isOpenEmbedModal, setisOpenEmbedModal] = useState(false);
-  const menuRef = useRef(null);
-  const placeMent = useAutoPosition(isOpenMenu, menuRef, 90);
 
   useEffect(() => {
     if (!isOpenMenu) return;
@@ -49,8 +67,28 @@ function InteractionBar({ repliesCount = 0, post }) {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [isOpenMenu]);
 
+  const handleLike = () => {
+    if (!isAuth) {
+      triggerAuthModal("like");
+      return;
+    }
+    like.toggle();
+  };
+
+  const handleOpenComment = () => {
+    if (!isAuth) {
+      triggerAuthModal("comment");
+      return;
+    }
+    setIsOpenCommentModal(true);
+  };
+
   const handleRepost = async () => {
     setOpenMenu(false);
+    if (!isAuth) {
+      triggerAuthModal("repost");
+      return;
+    }
     try {
       await repost.toggle();
     } catch (err) {
@@ -58,8 +96,40 @@ function InteractionBar({ repliesCount = 0, post }) {
     }
   };
 
+  const handleOpenRepostMenu = (e) => {
+    e.stopPropagation();
+    if (!isAuth) {
+      triggerAuthModal("repost");
+      return;
+    }
+    setOpenMenu((prev) => !prev);
+  };
+
+  const handlePostComment = async (formData) => {
+    try {
+      const response = await postComment(post.id, formData);
+      dispatch(incrementRepliesCount(post.id));
+      return response;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const handleQuoteModal = () => {
     setOpenMenu(false);
+    if (!isAuth) {
+      setIsOpenInfoModal(true);
+      return;
+    }
+    setIsOpenRepostModal(true);
+  };
+
+  const handleShareModal = () => {
+    setOpenMenu(false);
+    if (!isAuth) {
+      triggerAuthModal("share");
+      return;
+    }
     setIsOpenRepostModal(true);
   };
 
@@ -77,7 +147,7 @@ function InteractionBar({ repliesCount = 0, post }) {
     <div className="mt-3 flex items-center gap-5 text-neutral-400">
       <button
         className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-red-500"
-        onClick={like.toggle}
+        onClick={handleLike}
       >
         <Heart
           className={`h-[19px] w-[19px] ${
@@ -91,7 +161,7 @@ function InteractionBar({ repliesCount = 0, post }) {
 
       <button
         className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-sky-400"
-        onClick={() => setIsOpenCommentModal(true)}
+        onClick={handleOpenComment}
       >
         <MessageCircle className="h-[19px] w-[19px]" />
         {repliesCount > 0 && (
@@ -103,10 +173,7 @@ function InteractionBar({ repliesCount = 0, post }) {
         <button
           type="button"
           className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-emerald-400"
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpenMenu((prev) => !prev);
-          }}
+          onClick={handleOpenRepostMenu}
         >
           <Repeat2
             className={`h-[20px] w-[20px] ${
@@ -157,11 +224,12 @@ function InteractionBar({ repliesCount = 0, post }) {
         <CommentModal
           post={post}
           onClose={() => setIsOpenCommentModal(false)}
+          onSubmit={handlePostComment}
         />
       )}
 
       <button
-        onClick={() => setIsOpenShareModal(true)}
+        onClick={handleShareModal}
         className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-white"
       >
         <Send className="h-[18px] w-[18px]" />
@@ -185,6 +253,13 @@ function InteractionBar({ repliesCount = 0, post }) {
 
       {isOpenEmbedModal && (
         <EmbedModal post={post} onClose={() => setisOpenEmbedModal(false)} />
+      )}
+
+      {isOpenInfoModal && (
+        <NotificationModal
+          type={modalType}
+          onClose={() => setIsOpenInfoModal(false)}
+        />
       )}
     </div>
   );

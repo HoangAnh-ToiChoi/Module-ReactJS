@@ -1,6 +1,7 @@
 import copy from "copy-to-clipboard";
 import { Check, Heart, MessageCircle, Repeat2, Send, X } from "lucide-react";
 import { useState } from "react";
+
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 import { formatCount } from "~/utils/format";
 import PostPreviewContent from "./PostPreviewContent";

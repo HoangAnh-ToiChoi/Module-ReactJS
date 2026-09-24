@@ -61,3 +61,12 @@ export const resetPassword = async (data) => {
     throw e;
   }
 };
+
+export const VerifyEmail = async (data) => {
+  try {
+    const response = await httpClient.post("/api/auth/verify-email", data);
+    return response.data;
+  } catch (e) {
+    throw e;
+  }
+};

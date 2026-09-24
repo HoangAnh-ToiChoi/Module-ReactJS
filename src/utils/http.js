@@ -62,8 +62,11 @@ const refreshToken = async () => {
 const getNewToken = async () => {
   if (!isRefreshing) {
     isRefreshing = true;
-    await refreshToken();
-    isRefreshing = false;
+    try {
+      await refreshToken();
+    } finally {
+      isRefreshing = false;
+    }
     return;
   }
 
@@ -80,7 +83,7 @@ httpClient.interceptors.response.use(
     const shouldRenewToken =
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url.includes("/api/auth/login");
+      !originalRequest.url.includes("/api/auth/");
 
     if (shouldRenewToken) {
       originalRequest._retry = true;
