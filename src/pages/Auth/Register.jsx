@@ -65,7 +65,7 @@ function Register() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="relative flex w-full max-w-[400px] flex-col gap-4 overflow-hidden rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
+      className="relative flex w-[400px] max-w-[calc(100vw-32px)] flex-col gap-4 overflow-hidden rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
     >
       {isSubmitting && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#181818]/80 backdrop-blur-xs">
@@ -80,7 +80,7 @@ function Register() {
         <X className="h-5 w-5" />
       </Link>
 
-      <div className="mb-2 text-center">
+      <div className="mb-2 flex min-h-[58px] flex-col justify-center text-center">
         <h1 className="text-xl font-bold tracking-tight text-white">
           {t("auth.register_title")}
         </h1>

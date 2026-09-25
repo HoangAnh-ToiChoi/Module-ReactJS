@@ -56,7 +56,7 @@ function PostMenu({
             <div className="space-y-0.5">
               <button
                 type="button"
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("sidebar.insights")}</span>
                 <BarChart2 className="h-4 w-4 text-[#f3f5f7]" />
@@ -70,7 +70,7 @@ function PostMenu({
               <button
                 type="button"
                 onClick={onEdit}
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("common.edit")}</span>
               </button>
@@ -78,7 +78,7 @@ function PostMenu({
               <button
                 type="button"
                 onClick={onSave}
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{isSaved ? t("post.unsave_post") : t("post.save_post")}</span>
                 <Bookmark
@@ -88,7 +88,7 @@ function PostMenu({
 
               <button
                 type="button"
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("post.pin_to_profile")}</span>
                 <Pin className="h-4 w-4 text-[#f3f5f7]" />
@@ -96,7 +96,7 @@ function PostMenu({
 
               <button
                 type="button"
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("sidebar.archive")}</span>
                 <Archive className="h-4 w-4 text-[#f3f5f7]" />
@@ -104,7 +104,7 @@ function PostMenu({
 
               <button
                 type="button"
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("post.hide_like_count")}</span>
                 <HeartOff className="h-4 w-4 text-[#f3f5f7]" />
@@ -112,7 +112,7 @@ function PostMenu({
 
               <button
                 type="button"
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("post.reply_options")}</span>
                 <ChevronRight className="h-4 w-4 text-neutral-400" />
@@ -126,7 +126,7 @@ function PostMenu({
               <button
                 type="button"
                 onClick={onDelete}
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-red-500 transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-red-500 transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("common.delete")}</span>
                 <Trash2 className="h-4 w-4 text-red-500" />
@@ -139,7 +139,7 @@ function PostMenu({
             <div className="space-y-0.5">
               <button
                 type="button"
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("post.add_to_feed")}</span>
                 <ChevronRight className="h-4 w-4 text-neutral-400" />
@@ -153,7 +153,7 @@ function PostMenu({
               <button
                 type="button"
                 onClick={onSave}
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{isSaved ? t("post.unsave_post") : t("post.save_post")}</span>
                 <Bookmark
@@ -164,7 +164,7 @@ function PostMenu({
               <button
                 type="button"
                 onClick={onHide}
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("post.not_interested")}</span>
                 <EyeOff className="h-4 w-4 text-[#f3f5f7]" />
@@ -178,7 +178,7 @@ function PostMenu({
               <button
                 type="button"
                 onClick={onMute}
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("post.mute")}</span>
                 <UserX className="h-4 w-4 text-[#f3f5f7]" />
@@ -187,7 +187,7 @@ function PostMenu({
               <button
                 type="button"
                 onClick={onRestrict}
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("post.restrict")}</span>
                 <ShieldAlert className="h-4 w-4 text-[#f3f5f7]" />
@@ -196,7 +196,7 @@ function PostMenu({
               <button
                 type="button"
                 onClick={onBlock}
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-red-500 transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-red-500 transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("post.block")}</span>
                 <Ban className="h-4 w-4 text-red-500" />
@@ -205,7 +205,7 @@ function PostMenu({
               <button
                 type="button"
                 onClick={onReport}
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-red-500 transition-colors hover:bg-[#323232] active:scale-[0.99]"
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-red-500 transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
                 <span>{t("common.report")}</span>
                 <AlertCircle className="h-4 w-4 text-red-500" />
@@ -221,7 +221,7 @@ function PostMenu({
           <button
             type="button"
             onClick={onCopyLink}
-            className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+            className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
           >
             <span>{t("common.copy_link")}</span>
             <Link className="h-4 w-4 text-[#f3f5f7]" />
@@ -230,7 +230,7 @@ function PostMenu({
           <button
             type="button"
             onClick={onGetEmbed}
-            className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
+            className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 text-left text-[14px] whitespace-nowrap h-10 font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
           >
             <span>{t("common.embed")}</span>
             <Code2 className="h-4 w-4 text-[#f3f5f7]" />

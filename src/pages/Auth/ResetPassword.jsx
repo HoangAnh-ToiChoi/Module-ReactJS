@@ -118,7 +118,7 @@ function ResetPassword() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="relative flex w-full max-w-[400px] flex-col gap-4 overflow-hidden rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
+      className="relative flex w-[400px] max-w-[calc(100vw-32px)] flex-col gap-4 overflow-hidden rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
     >
       {isSubmitting && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#181818]/80 backdrop-blur-xs">
@@ -139,7 +139,7 @@ function ResetPassword() {
         <X className="h-5 w-5" />
       </Link>
 
-      <div className="mb-2 text-center">
+      <div className="mb-2 flex min-h-[58px] flex-col justify-center text-center">
         <h1 className="text-xl font-bold tracking-tight text-white">
           {t("auth.reset_password_title")}
         </h1>
@@ -204,7 +204,7 @@ function ResetPassword() {
 
       {isOpen && (
         <AlertDialog open={isOpen} onOpenChange={setOpen}>
-          <AlertDialogContent className="w-full max-w-[400px] rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl">
+          <AlertDialogContent className="w-[400px] max-w-[calc(100vw-32px)] rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl">
             <AlertDialogHeader className="flex flex-col items-center gap-3 text-center sm:text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-red-500/20 bg-red-500/10 text-red-400 shadow-inner">
                 <CircleAlert className="h-7 w-7" />

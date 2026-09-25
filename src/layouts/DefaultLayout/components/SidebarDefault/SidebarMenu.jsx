@@ -12,7 +12,7 @@ function SidebarMenu() {
 
   const classNameActive = (tabName) =>
     clsx(
-      "flex w-full cursor-pointer items-center gap-3.5 rounded-2xl  px-4 py-2 text-[15px] transition-colors",
+      "flex h-11 w-full cursor-pointer items-center gap-3.5 rounded-2xl px-4 text-[15px] whitespace-nowrap transition-colors",
       {
         "bg-[#222222] font-semibold text-white": activeTab === tabName,
         "transition-colors hover:bg-[#1f1f1f]": activeTab !== tabName,
@@ -51,7 +51,7 @@ function SidebarMenu() {
       </div>
 
       <div className="mt-4 flex flex-col gap-1">
-        <div className="flex items-center justify-between px-4 py-1.5 text-[13px] font-semibold text-[#777777]">
+        <div className="flex h-8 items-center justify-between px-4 text-[13px] font-semibold text-[#777777]">
           <span>{t("sidebar.other_feeds")}</span>
           <button className="cursor-pointer transition-colors hover:text-[#999999]">
             {t("common.edit")}

@@ -17,7 +17,7 @@ function NotificationModal({ onClose, icon, type = "", children }) {
       onClick={onClose}
     >
       <div
-        className="animate-in zoom-in-95 relative flex w-full max-w-[440px] flex-col items-center overflow-hidden rounded-[32px] border border-[#2a2a2a] bg-[#141414] p-8 text-center text-white shadow-2xl duration-150"
+        className="animate-in zoom-in-95 relative flex w-[440px] max-w-[calc(100vw-32px)] flex-col items-center overflow-hidden rounded-[32px] border border-[#2a2a2a] bg-[#141414] p-8 text-center text-white shadow-2xl duration-150"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -59,7 +59,7 @@ function NotificationModal({ onClose, icon, type = "", children }) {
           )}
         </div>
 
-        <div className="w-full">
+        <div className="flex min-h-[120px] w-full flex-col justify-center">
           {children || (
             <>
               <h2 className="whitespace-pre-line px-2 text-[24px] leading-snug font-extrabold tracking-tight text-white sm:text-[26px]">

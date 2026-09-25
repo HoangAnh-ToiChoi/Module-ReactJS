@@ -23,10 +23,10 @@ function DeleteModal({ post, onClose, onSubmit }) {
       onClick={onClose}
     >
       <div
-        className="animate-in zoom-in-95 relative w-full max-w-[340px] overflow-hidden rounded-3xl border border-[#2e2e2e] bg-[#181818] text-white shadow-2xl duration-150"
+        className="animate-in zoom-in-95 relative w-[340px] max-w-[calc(100vw-32px)] overflow-hidden rounded-3xl border border-[#2e2e2e] bg-[#181818] text-white shadow-2xl duration-150"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 pb-5 text-center">
+        <div className="flex min-h-[116px] flex-col justify-center p-6 pb-5 text-center">
           <h2 className="mb-2 text-[17px] font-bold text-white">
             {t("post.delete_title")}
           </h2>
@@ -39,14 +39,14 @@ function DeleteModal({ post, onClose, onSubmit }) {
           <button
             type="button"
             onClick={onClose}
-            className="cursor-pointer border-r border-[#2e2e2e] py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-neutral-800/50 active:scale-95"
+            className="flex h-12 cursor-pointer items-center justify-center border-r border-[#2e2e2e] text-[15px] font-bold text-white transition-colors hover:bg-neutral-800/50 active:scale-95"
           >
             {t("common.cancel")}
           </button>
           <button
             type="button"
             onClick={handleDeleting}
-            className="cursor-pointer py-3.5 text-[15px] font-bold text-red-500 transition-colors hover:bg-neutral-800/50 active:scale-95 disabled:opacity-50"
+            className="flex h-12 cursor-pointer items-center justify-center text-[15px] font-bold text-red-500 transition-colors hover:bg-neutral-800/50 active:scale-95 disabled:opacity-50"
           >
             {t("common.delete")}
           </button>

@@ -61,7 +61,7 @@ function Login() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="relative flex w-full max-w-[400px] flex-col gap-4 rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
+      className="relative flex w-[400px] max-w-[calc(100vw-32px)] flex-col gap-4 rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
     >
       <Link
         to="/"
@@ -70,7 +70,7 @@ function Login() {
         <X className="h-5 w-5" />
       </Link>
 
-      <div className="mb-2 text-center">
+      <div className="mb-2 flex min-h-[58px] flex-col justify-center text-center">
         <h1 className="text-xl font-bold tracking-tight text-white">
           {t("auth.login_title")}
         </h1>

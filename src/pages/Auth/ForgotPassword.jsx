@@ -50,7 +50,7 @@ function ForgotPassword() {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="relative flex w-full max-w-[400px] flex-col gap-4 overflow-hidden rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
+        className="relative flex w-[400px] max-w-[calc(100vw-32px)] flex-col gap-4 overflow-hidden rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl"
       >
         {isSubmitting && (
           <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#181818]/80 backdrop-blur-xs">
@@ -65,7 +65,7 @@ function ForgotPassword() {
           <X className="h-5 w-5" />
         </Link>
 
-        <div className="mb-2 text-center">
+        <div className="mb-2 flex min-h-[68px] flex-col justify-center text-center">
           <h1 className="text-xl font-bold tracking-tight text-white">
             {t("auth.forgot_password_title")}
           </h1>
@@ -91,7 +91,7 @@ function ForgotPassword() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="mt-2 w-full rounded-xl bg-white py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-2 h-11 w-full rounded-xl bg-white text-sm font-semibold text-black transition-colors hover:bg-neutral-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {t("common.continue")}
           </Button>
@@ -109,7 +109,7 @@ function ForgotPassword() {
 
       {isOpen && (
         <AlertDialog open={isOpen} onOpenChange={setOpen}>
-          <AlertDialogContent className="w-full max-w-[400px] rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl">
+          <AlertDialogContent className="w-[400px] max-w-[calc(100vw-32px)] rounded-3xl border border-[#333333] bg-[#181818] p-8 text-white shadow-2xl">
             <AlertDialogHeader className="flex flex-col items-center gap-3 text-center sm:text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#333333] bg-[#222222] text-white shadow-inner">
                 <MailCheck className="h-7 w-7 text-white" />
