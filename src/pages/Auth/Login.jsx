@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate, useLocation } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { loginSchema } from "~/validations/authSchema";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -15,6 +16,7 @@ import {
 import { useSelectorUser } from "~/features/Auth/Hook";
 
 function Login() {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -70,16 +72,16 @@ function Login() {
 
       <div className="mb-2 text-center">
         <h1 className="text-xl font-bold tracking-tight text-white">
-          Đăng nhập vào Threads
+          {t("auth.login_title")}
         </h1>
         <p className="mt-1 text-[13px] text-neutral-400">
-          Sử dụng email và mật khẩu của bạn để tiếp tục
+          {t("auth.login_subtitle")}
         </p>
       </div>
 
       {successMessage && (
         <div className="rounded-xl border-emerald-500/20 bg-emerald-500/10 px-3.5 py-2.5 text-center text-[13px] text-emerald-400">
-          Xác thực email thành công. Bây giờ bạn có thể đăng nhập
+          {t("auth.email_verified_success")}
         </div>
       )}
 
@@ -88,7 +90,7 @@ function Login() {
           {...register("email")}
           type="email"
           aria-invalid={!!errors.email}
-          placeholder="Tên người dùng hoặc email"
+          placeholder={t("auth.email_placeholder")}
           className="h-11 rounded-lg border-[#333333] bg-[#101010] px-3.5 py-3 text-[14px] text-white placeholder-neutral-500 focus-visible:border-neutral-400 focus-visible:ring-0"
         />
         {errors.email && (
@@ -103,7 +105,7 @@ function Login() {
           {...register("password")}
           aria-invalid={!!errors.password}
           type="password"
-          placeholder="Mật khẩu"
+          placeholder={t("auth.password_placeholder")}
           className="h-11 rounded-lg border-[#333333] bg-[#101010] px-3.5 py-3 text-[14px] text-white placeholder-neutral-500 focus-visible:border-neutral-400 focus-visible:ring-0"
         />
         {errors.password && (
@@ -117,19 +119,19 @@ function Login() {
         type="submit"
         className="mt-2 h-11 w-full cursor-pointer rounded-xl bg-white font-semibold text-black transition-colors hover:bg-neutral-200"
       >
-        Đăng nhập
+        {t("common.login")}
       </Button>
 
       <Link
         to="/forgotpassword"
         className="mt-1 text-center text-[13px] text-neutral-400 transition-colors hover:text-white"
       >
-        Quên mật khẩu?
+        {t("auth.forgot_password_title")}
       </Link>
 
       <div className="my-1 flex items-center">
         <div className="flex-1 border-t border-[#2a2a2a]"></div>
-        <span className="px-3 text-[12px] text-neutral-500">hoặc</span>
+        <span className="px-3 text-[12px] text-neutral-500">{t("common.or")}</span>
         <div className="flex-1 border-t border-[#2a2a2a]"></div>
       </div>
 
@@ -137,9 +139,9 @@ function Login() {
         to="/register"
         className="text-center text-[14px] text-neutral-300 transition-colors hover:text-white"
       >
-        Chưa có tài khoản?{" "}
+        {t("auth.no_account")}{" "}
         <span className="font-semibold text-white underline-offset-4 hover:underline">
-          Đăng ký
+          {t("common.register")}
         </span>
       </Link>
     </form>

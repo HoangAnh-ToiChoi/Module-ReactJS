@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@base-ui/react/button";
 import { Input } from "@base-ui/react/input";
@@ -15,6 +16,7 @@ import {
 import Loading from "~/components/Loading";
 
 function Register() {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -67,7 +69,7 @@ function Register() {
     >
       {isSubmitting && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#181818]/80 backdrop-blur-xs">
-          <Loading>Đang đăng ký...</Loading>
+          <Loading>{t("auth.registering")}</Loading>
         </div>
       )}
 
@@ -80,16 +82,16 @@ function Register() {
 
       <div className="mb-2 text-center">
         <h1 className="text-xl font-bold tracking-tight text-white">
-          Đăng Ký Tài Khoản Threads
+          {t("auth.register_title")}
         </h1>
         <p className="mt-1 text-[13px] text-neutral-400">
-          Nhập đầy đủ thông tin của bạn để tiếp tục
+          {t("auth.register_subtitle")}
         </p>
       </div>
 
       {successMessage && (
         <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3.5 py-2.5 text-center text-[13px] text-emerald-400">
-          Đăng ký thành công. Hãy kiểm tra email để xác thực
+          {t("auth.register_success")}
         </div>
       )}
 
@@ -98,7 +100,7 @@ function Register() {
           {...register("username")}
           type="text"
           aria-invalid={!!errors.username}
-          placeholder="Tên người dùng"
+          placeholder={t("auth.username_placeholder")}
           className="h-11 rounded-lg border-[#333333] bg-[#101010] px-3.5 py-3 text-[14px] text-white placeholder-neutral-500 focus-visible:border-neutral-400 focus-visible:ring-0"
         />
         {errors.username && (
@@ -113,7 +115,7 @@ function Register() {
           {...register("email")}
           type="email"
           aria-invalid={!!errors.email}
-          placeholder="email"
+          placeholder={t("auth.email_placeholder")}
           className="h-11 rounded-lg border-[#333333] bg-[#101010] px-3.5 py-3 text-[14px] text-white placeholder-neutral-500 focus-visible:border-neutral-400 focus-visible:ring-0"
         />
         {errors.email && (
@@ -128,7 +130,7 @@ function Register() {
           {...register("password")}
           aria-invalid={!!errors.password}
           type="password"
-          placeholder="Mật khẩu"
+          placeholder={t("auth.password_placeholder")}
           className="h-11 rounded-lg border-[#333333] bg-[#101010] px-3.5 py-3 text-[14px] text-white placeholder-neutral-500 focus-visible:border-neutral-400 focus-visible:ring-0"
         />
         {errors.password && (
@@ -143,7 +145,7 @@ function Register() {
           {...register("password_confirmation")}
           aria-invalid={!!errors.password_confirmation}
           type="password"
-          placeholder="Xác Nhận Mật khẩu"
+          placeholder={t("auth.confirm_password_placeholder")}
           className="h-11 rounded-lg border-[#333333] bg-[#101010] px-3.5 py-3 text-[14px] text-white placeholder-neutral-500 focus-visible:border-neutral-400 focus-visible:ring-0"
         />
         {errors.password_confirmation && (
@@ -164,16 +166,16 @@ function Register() {
         disabled={isSubmitting}
         className="mt-2 w-full rounded-xl bg-white py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Đăng ký
+        {t("common.register")}
       </Button>
 
       <Link
         to="/login"
         className="my-3.5 text-center text-[14px] text-neutral-300 transition-colors hover:text-white"
       >
-        Bạn đã có tài khoản?{" "}
+        {t("auth.have_account")}{" "}
         <span className="font-semibold text-white underline-offset-4 hover:underline">
-          Đăng nhập ngay
+          {t("auth.login_now")}
         </span>
       </Link>
     </form>

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { useSelectorUser } from "~/features/Auth/Hook";
@@ -22,6 +23,7 @@ import { quotePost } from "~/service/PostService/PostService";
 import PostPreviewContent from "./PostPreviewContent";
 
 function QuoteModal({ post, onClose }) {
+  const { t } = useTranslation();
   const authUser = useSelectorUser();
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,11 +68,11 @@ function QuoteModal({ post, onClose }) {
             onClick={onClose}
             className="cursor-pointer text-[15px] font-medium text-white transition-colors hover:text-neutral-400"
           >
-            Hủy
+            {t("common.cancel")}
           </button>
 
           <h2 className="text-[16px] font-bold tracking-tight text-white">
-            Thread mới
+            {t("sidebar.new_thread")}
           </h2>
 
           <div className="flex items-center gap-2 text-neutral-400">
@@ -113,7 +115,7 @@ function QuoteModal({ post, onClose }) {
                 </span>
                 <ChevronRight className="h-4 w-4 text-neutral-500" />
                 <span className="cursor-pointer text-[14px] text-neutral-400 hover:underline">
-                  Cộng đồng hoặc chủ đề
+                  {t("post.community_or_topic")}
                 </span>
               </div>
 
@@ -122,7 +124,7 @@ function QuoteModal({ post, onClose }) {
                 autoFocus
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="Hãy chia sẻ suy nghĩ của bạn..."
+                placeholder={t("post.share_thoughts")}
                 className="mt-1 w-full resize-none bg-transparent text-[15px] leading-relaxed text-white placeholder-neutral-500 outline-none"
               />
 
@@ -203,7 +205,7 @@ function QuoteModal({ post, onClose }) {
             className="flex cursor-pointer items-center gap-2 text-[14px] text-neutral-400 transition-colors hover:text-white"
           >
             <ArrowDownUp className="h-4 w-4" />
-            <span>Lựa chọn về bài viết</span>
+            <span>{t("post.post_options")}</span>
           </button>
 
           <button
@@ -212,7 +214,7 @@ function QuoteModal({ post, onClose }) {
             className="cursor-pointer rounded-full bg-white px-6 py-2 text-[14px] font-bold text-black transition-transform hover:bg-neutral-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
             onClick={handleQuote}
           >
-            {isSubmitting ? "Đang đăng..." : "Đăng"}
+            {isSubmitting ? t("common.posting") : t("common.post")}
           </button>
         </div>
       </div>

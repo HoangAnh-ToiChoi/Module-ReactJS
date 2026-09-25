@@ -11,11 +11,13 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { useTranslation } from "react-i18next";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 import { formatRelativeTime } from "~/utils/format";
 
 function EditPostModal({ post, onClose, onSubmit }) {
+  const { t } = useTranslation();
   const [content, setContent] = useState(post?.content || "");
   const [mediaItems, setMediaItems] = useState(() => {
     return (post?.media_urls || []).map((url) => ({
@@ -81,11 +83,11 @@ function EditPostModal({ post, onClose, onSubmit }) {
             onClick={onClose}
             className="cursor-pointer text-[15px] font-medium text-white transition-colors hover:text-neutral-400"
           >
-            Hủy
+            {t("common.cancel")}
           </button>
 
           <h2 className="text-[16px] font-bold tracking-tight text-white">
-            Chỉnh sửa bài viết
+            {t("post.edit_title")}
           </h2>
 
           <button
@@ -129,7 +131,7 @@ function EditPostModal({ post, onClose, onSubmit }) {
                 autoFocus
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="Chỉnh sửa bài viết..."
+                placeholder={t("post.edit_placeholder")}
                 className="mt-1 w-full resize-none bg-transparent text-[15px] leading-relaxed text-white placeholder-neutral-500 outline-none"
               />
 
@@ -236,7 +238,7 @@ function EditPostModal({ post, onClose, onSubmit }) {
             onClick={handleUpdateContent}
             className="cursor-pointer rounded-full bg-white px-6 py-2 text-[14px] font-bold text-black transition-transform hover:bg-neutral-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Lưu
+            {t("common.save")}
           </button>
         </div>
       </div>

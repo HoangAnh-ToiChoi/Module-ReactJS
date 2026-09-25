@@ -1,14 +1,19 @@
 import { AlertCircle, Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 
 function ReportSuccessModal({
-  title = "Cảm ơn bạn đã đóng góp ý kiến",
-  description = "Khi nhìn thấy nội dung mình không thích trên Threads, bạn có thể báo cáo nếu nội dung đó không tuân thủ Tiêu chuẩn cộng đồng hoặc xóa người chia sẻ nội dung đó khỏi trải nghiệm của mình.",
+  title,
+  description,
   isError = false,
   onClose,
 }) {
   useLockBodyScroll();
+  const { t } = useTranslation();
+
+  const finalTitle = title || t("report.thank_you_title");
+  const finalDesc = description || t("report.thank_you_desc");
 
   return (
     <div
@@ -34,12 +39,12 @@ function ReportSuccessModal({
 
         {/* Title */}
         <h3 className="mt-5 text-[19px] font-bold tracking-tight text-white">
-          {title}
+          {finalTitle}
         </h3>
 
         {/* Description */}
         <p className="mt-3 text-[13.5px] leading-relaxed text-neutral-400">
-          {description}
+          {finalDesc}
         </p>
 
         {/* Action Button */}
@@ -48,7 +53,7 @@ function ReportSuccessModal({
           onClick={onClose}
           className="mt-6 h-12 w-full cursor-pointer rounded-2xl bg-white text-[15px] font-bold text-black transition-transform hover:opacity-90 active:scale-[0.99]"
         >
-          Xong
+          {t("common.done")}
         </button>
       </div>
     </div>

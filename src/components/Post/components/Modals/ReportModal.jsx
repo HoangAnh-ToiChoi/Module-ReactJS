@@ -1,10 +1,12 @@
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 import { REPORT_REASONS } from "~/data/reportReasons";
 
 function ReportModal({ onClose, onSubmitReport }) {
   useLockBodyScroll();
+  const { t } = useTranslation();
 
   const handleSelectReason = (key, reason) => {
     if (onSubmitReport) {
@@ -33,7 +35,7 @@ function ReportModal({ onClose, onSubmitReport }) {
             <ChevronLeft className="h-5 w-5" />
           </button>
 
-          <h2 className="text-[16px] font-bold text-white">Báo cáo</h2>
+          <h2 className="text-[16px] font-bold text-white">{t("common.report")}</h2>
 
           <button
             type="button"
@@ -49,11 +51,10 @@ function ReportModal({ onClose, onSubmitReport }) {
           {/* Title & Description */}
           <div className="mb-6 text-center">
             <h3 className="text-[19px] leading-tight font-bold text-white">
-              Tại sao bạn báo cáo nội dung này?
+              {t("report.title")}
             </h3>
             <p className="mt-2.5 text-[13.5px] leading-relaxed text-neutral-400">
-              Báo cáo của bạn sẽ được ẩn danh. Nếu ai đó đang gặp nguy hiểm,
-              đừng chần chừ mà hãy báo ngay cho dịch vụ khẩn cấp tại địa phương.
+              {t("report.desc")}
             </p>
           </div>
 
@@ -63,10 +64,10 @@ function ReportModal({ onClose, onSubmitReport }) {
               <button
                 key={reason.key}
                 type="button"
-                onClick={() => handleSelectReason(reason.key, reason.label)}
+                onClick={() => handleSelectReason(reason.key, t(`report.reasons.${reason.key}`, reason.label))}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-3.5 text-left text-[14.5px] font-medium text-[#f3f5f7] transition-colors hover:bg-[#262626] active:scale-[0.99]"
               >
-                <span className="pr-4 leading-snug">{reason.label}</span>
+                <span className="pr-4 leading-snug">{t(`report.reasons.${reason.key}`, reason.label)}</span>
                 <ChevronRight className="h-4 w-4 shrink-0 text-neutral-400" />
               </button>
             ))}

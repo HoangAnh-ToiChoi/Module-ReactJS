@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 import AppLogo from "~/layouts/DefaultLayout/components/AppLogo";
 import { MENU_BLOCK_1, MENU_BLOCK_2, MENU_BLOCK_3 } from "./SidebarConfig";
 
 function SidebarMenu() {
   const [activeTab, setActive] = useState("for-you");
+  const { t } = useTranslation();
 
   const classNameActive = (tabName) =>
     clsx(
@@ -22,6 +24,7 @@ function SidebarMenu() {
   };
 
   const renderMenuItems = (item) => {
+    const translationKey = `sidebar.${item.id.replace(/-/g, "_")}`;
     return (
       <NavLink
         key={item.id}
@@ -30,7 +33,7 @@ function SidebarMenu() {
         onClick={() => setActive(item.id)}
       >
         {item.icon ? <item.icon className={item.iconSize} /> : null}
-        <span>{item.label}</span>
+        <span>{t(translationKey, item.label)}</span>
       </NavLink>
     );
   };
@@ -49,9 +52,9 @@ function SidebarMenu() {
 
       <div className="mt-4 flex flex-col gap-1">
         <div className="flex items-center justify-between px-4 py-1.5 text-[13px] font-semibold text-[#777777]">
-          <span>Bảng feed khác</span>
+          <span>{t("sidebar.other_feeds")}</span>
           <button className="cursor-pointer transition-colors hover:text-[#999999]">
-            Chỉnh sửa
+            {t("common.edit")}
           </button>
         </div>
         {MENU_BLOCK_3.map(renderMenuItems)}

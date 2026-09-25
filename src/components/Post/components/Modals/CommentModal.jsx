@@ -20,8 +20,10 @@ import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 import PostPreviewContent from "./PostPreviewContent";
 import { getComment } from "~/service/PostService/PostService";
 import { formatRelativeTime } from "~/utils/format";
+import { useTranslation } from "react-i18next";
 
 function CommentModal({ post, onClose, onSubmit }) {
+  const { t } = useTranslation();
   const authUser = useSelectorUser();
   const [threadItems, setThreadItems] = useState([
     { id: 1, content: "", topic: "", showTopicInput: false },
@@ -175,11 +177,11 @@ function CommentModal({ post, onClose, onSubmit }) {
             onClick={onClose}
             className="cursor-pointer text-[14.5px] font-medium text-neutral-400 transition-colors hover:text-white"
           >
-            Hủy
+            {t("common.cancel")}
           </button>
 
           <h2 className="text-[16px] font-bold tracking-tight text-white">
-            Trả lời
+            {t("common.reply")}
           </h2>
 
           <div className="flex items-center gap-2.5 text-neutral-400">
@@ -210,7 +212,7 @@ function CommentModal({ post, onClose, onSubmit }) {
           {comment.length > 0 && (
             <div className="my-3 flex flex-col gap-3 rounded-2xl border border-[#242424] bg-[#181818] p-3.5">
               <h4 className="text-[13px] font-semibold text-neutral-400">
-                Các bình luận trước ({comment.length})
+                {t("post.previous_comments")} ({comment.length})
               </h4>
               <div className="flex max-h-[200px] flex-col gap-2.5 overflow-y-auto pr-1">
                 {comment.map((c) => (
@@ -298,8 +300,8 @@ function CommentModal({ post, onClose, onSubmit }) {
                   onChange={(e) => handleContentChange(index, e.target.value)}
                   placeholder={
                     index === 0
-                      ? `Trả lời ${post?.user?.username || post?.user?.name || "nguoidung"}...`
-                      : "Thêm vào chuỗi bài viết..."
+                      ? t("post.reply_to", { name: post?.user?.username || post?.user?.name || "nguoidung" })
+                      : t("post.add_to_thread")
                   }
                   className="mt-1 w-full resize-none bg-transparent text-[15px] leading-relaxed text-[#f3f5f7] placeholder-neutral-500 outline-none"
                 />
@@ -314,7 +316,7 @@ function CommentModal({ post, onClose, onSubmit }) {
                         onChange={(e) =>
                           handleTopicChange(index, e.target.value)
                         }
-                        placeholder="Thêm chủ đề..."
+                        placeholder={t("post.add_topic")}
                         className="w-32 bg-transparent text-[13px] font-medium text-sky-400 placeholder-sky-400/60 outline-none"
                         autoFocus
                       />
@@ -431,10 +433,10 @@ function CommentModal({ post, onClose, onSubmit }) {
               type="button"
               onClick={handleAddThread}
               className="flex cursor-pointer items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3.5 py-1.5 text-[13.5px] font-semibold text-sky-400 transition-all hover:bg-sky-500/20 hover:text-sky-300"
-              title="Add to thread (Thêm vào chuỗi)"
+              title={t("post.add_to_thread")}
             >
               <Plus className="h-4 w-4" />
-              <span>Add to thread (Thêm vào chuỗi)</span>
+              <span>{t("post.add_to_thread")}</span>
             </button>
           </div>
         </div>
@@ -443,10 +445,10 @@ function CommentModal({ post, onClose, onSubmit }) {
           <button
             type="button"
             className="flex cursor-pointer items-center gap-2 text-[13.5px] text-neutral-400 transition-colors hover:text-white"
-            title="Reply options (Cài đặt quyền trả lời)"
+            title={t("post.reply_options")}
           >
             <ArrowDownUp className="h-4 w-4" />
-            <span>Bất kỳ ai cũng có thể trả lời</span>
+            <span>{t("post.anyone_can_reply")}</span>
           </button>
 
           <button
@@ -455,7 +457,7 @@ function CommentModal({ post, onClose, onSubmit }) {
             className="cursor-pointer rounded-full bg-white px-5 py-1.5 text-[14px] font-semibold text-black transition-all hover:bg-neutral-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
             onClick={handleSubmit}
           >
-            {isSubmitting ? "Đang đăng..." : "Đăng"}
+            {isSubmitting ? t("common.posting") : t("common.post")}
           </button>
         </div>
       </div>

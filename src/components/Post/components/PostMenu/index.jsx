@@ -14,6 +14,7 @@ import {
   Trash2,
   UserX,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cn } from "~/lib/utils";
 
 function PostMenu({
@@ -32,6 +33,7 @@ function PostMenu({
   onBlock,
   onReport,
 }) {
+  const { t } = useTranslation();
   const isSaved = post?.is_saved_by_auth;
   const isUser = user?.id === post?.user_id;
 
@@ -56,7 +58,7 @@ function PostMenu({
                 type="button"
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Thông tin chi tiết</span>
+                <span>{t("sidebar.insights")}</span>
                 <BarChart2 className="h-4 w-4 text-[#f3f5f7]" />
               </button>
             </div>
@@ -70,7 +72,7 @@ function PostMenu({
                 onClick={onEdit}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Chỉnh sửa</span>
+                <span>{t("common.edit")}</span>
               </button>
 
               <button
@@ -78,7 +80,7 @@ function PostMenu({
                 onClick={onSave}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>{isSaved ? "Bỏ Lưu" : "Lưu"}</span>
+                <span>{isSaved ? t("post.unsave_post") : t("post.save_post")}</span>
                 <Bookmark
                   className={`h-4 w-4 text-[#f3f5f7] ${isSaved ? "fill-[#f3f5f7]" : ""}`}
                 />
@@ -88,7 +90,7 @@ function PostMenu({
                 type="button"
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Ghim lên trang cá nhân</span>
+                <span>{t("post.pin_to_profile")}</span>
                 <Pin className="h-4 w-4 text-[#f3f5f7]" />
               </button>
 
@@ -96,7 +98,7 @@ function PostMenu({
                 type="button"
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Lưu trữ</span>
+                <span>{t("sidebar.archive")}</span>
                 <Archive className="h-4 w-4 text-[#f3f5f7]" />
               </button>
 
@@ -104,7 +106,7 @@ function PostMenu({
                 type="button"
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Ẩn số lượt thích và lượt xem</span>
+                <span>{t("post.hide_like_count")}</span>
                 <HeartOff className="h-4 w-4 text-[#f3f5f7]" />
               </button>
 
@@ -112,7 +114,7 @@ function PostMenu({
                 type="button"
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Lựa chọn trả lời</span>
+                <span>{t("post.reply_options")}</span>
                 <ChevronRight className="h-4 w-4 text-neutral-400" />
               </button>
             </div>
@@ -126,7 +128,7 @@ function PostMenu({
                 onClick={onDelete}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-red-500 transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Xóa</span>
+                <span>{t("common.delete")}</span>
                 <Trash2 className="h-4 w-4 text-red-500" />
               </button>
             </div>
@@ -139,7 +141,7 @@ function PostMenu({
                 type="button"
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Thêm vào bảng feed</span>
+                <span>{t("post.add_to_feed")}</span>
                 <ChevronRight className="h-4 w-4 text-neutral-400" />
               </button>
             </div>
@@ -153,7 +155,7 @@ function PostMenu({
                 onClick={onSave}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>{isSaved ? "Bỏ Lưu" : "Lưu"}</span>
+                <span>{isSaved ? t("post.unsave_post") : t("post.save_post")}</span>
                 <Bookmark
                   className={`h-4 w-4 text-[#f3f5f7] ${isSaved ? "fill-[#f3f5f7]" : ""}`}
                 />
@@ -164,7 +166,7 @@ function PostMenu({
                 onClick={onHide}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Không quan tâm</span>
+                <span>{t("post.not_interested")}</span>
                 <EyeOff className="h-4 w-4 text-[#f3f5f7]" />
               </button>
             </div>
@@ -178,7 +180,7 @@ function PostMenu({
                 onClick={onMute}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Tắt thông báo</span>
+                <span>{t("post.mute")}</span>
                 <UserX className="h-4 w-4 text-[#f3f5f7]" />
               </button>
 
@@ -187,7 +189,7 @@ function PostMenu({
                 onClick={onRestrict}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Hạn chế</span>
+                <span>{t("post.restrict")}</span>
                 <ShieldAlert className="h-4 w-4 text-[#f3f5f7]" />
               </button>
 
@@ -196,7 +198,7 @@ function PostMenu({
                 onClick={onBlock}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-red-500 transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Chặn</span>
+                <span>{t("post.block")}</span>
                 <Ban className="h-4 w-4 text-red-500" />
               </button>
 
@@ -205,7 +207,7 @@ function PostMenu({
                 onClick={onReport}
                 className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-red-500 transition-colors hover:bg-[#323232] active:scale-[0.99]"
               >
-                <span>Báo cáo</span>
+                <span>{t("common.report")}</span>
                 <AlertCircle className="h-4 w-4 text-red-500" />
               </button>
             </div>
@@ -221,7 +223,7 @@ function PostMenu({
             onClick={onCopyLink}
             className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
           >
-            <span>Sao chép liên kết</span>
+            <span>{t("common.copy_link")}</span>
             <Link className="h-4 w-4 text-[#f3f5f7]" />
           </button>
 
@@ -230,7 +232,7 @@ function PostMenu({
             onClick={onGetEmbed}
             className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232] active:scale-[0.99]"
           >
-            <span>Lấy mã nhúng</span>
+            <span>{t("common.embed")}</span>
             <Code2 className="h-4 w-4 text-[#f3f5f7]" />
           </button>
         </div>

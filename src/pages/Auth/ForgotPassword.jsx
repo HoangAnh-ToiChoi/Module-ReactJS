@@ -1,8 +1,9 @@
-﻿import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { X, MailCheck } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import Loading from "~/components/Loading";
 import { Button } from "@base-ui/react/button";
@@ -20,6 +21,7 @@ import {
 } from "~/components/ui/alert-dialog";
 
 function ForgotPassword() {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -52,7 +54,7 @@ function ForgotPassword() {
       >
         {isSubmitting && (
           <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#181818]/80 backdrop-blur-xs">
-            <Loading>Đang gửi yêu cầu...</Loading>
+            <Loading>{t("auth.sending_request")}</Loading>
           </div>
         )}
 
@@ -65,11 +67,10 @@ function ForgotPassword() {
 
         <div className="mb-2 text-center">
           <h1 className="text-xl font-bold tracking-tight text-white">
-            Quên mật khẩu?
+            {t("auth.forgot_password_title")}
           </h1>
           <p className="mt-1 text-[13px] text-neutral-400">
-            Nhập Email liên kết với tài khoản của bạn để nhận đường dẫn thay đổi
-            mật khẩu
+            {t("auth.forgot_password_subtitle")}
           </p>
         </div>
 
@@ -78,7 +79,7 @@ function ForgotPassword() {
             {...register("email")}
             type="email"
             aria-invalid={!!errors.email}
-            placeholder="email"
+            placeholder={t("auth.email_placeholder")}
             className="h-11 rounded-lg border-[#333333] bg-[#101010] px-3.5 py-3 text-[14px] text-white placeholder-neutral-500 focus-visible:border-neutral-400 focus-visible:ring-0"
           />
           {errors.email && (
@@ -92,7 +93,7 @@ function ForgotPassword() {
             disabled={isSubmitting}
             className="mt-2 w-full rounded-xl bg-white py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Tiếp tục
+            {t("common.continue")}
           </Button>
 
           <Link
@@ -100,7 +101,7 @@ function ForgotPassword() {
             className="my-3.5 text-center text-[14px] text-neutral-300 transition-colors hover:text-white"
           >
             <span className="font-semibold text-white underline-offset-4 hover:underline">
-              Quay lại đăng nhập
+              {t("auth.back_to_login")}
             </span>
           </Link>
         </div>
@@ -114,11 +115,10 @@ function ForgotPassword() {
                 <MailCheck className="h-7 w-7 text-white" />
               </div>
               <AlertDialogTitle className="text-xl font-bold tracking-tight text-white">
-                Gửi email thành công!
+                {t("auth.send_email_success_title")}
               </AlertDialogTitle>
               <AlertDialogDescription className="text-[13px] leading-relaxed text-neutral-400">
-                Liên kết đặt lại mật khẩu đã được gửi tới email của bạn. Vui
-                lòng kiểm tra hộp thư đến.
+                {t("auth.send_email_success_desc")}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="-mx-0 mt-3 -mb-0 border-none bg-transparent p-0 sm:justify-center">
@@ -128,7 +128,7 @@ function ForgotPassword() {
                 }}
                 className="h-11 w-full cursor-pointer rounded-xl bg-white font-semibold text-black transition-colors hover:bg-neutral-200 active:scale-[0.98]"
               >
-                Đã hiểu
+                {t("common.understood")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

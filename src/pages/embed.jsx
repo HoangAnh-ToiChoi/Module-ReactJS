@@ -7,12 +7,14 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 import Loading from "~/components/Loading";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { getFeedSingle } from "~/service/PostService/PostService";
 import { formatCount } from "~/utils/format";
 
 function Embed() {
+  const { t, i18n } = useTranslation();
   const { postId } = useParams();
   const [post, setPost] = useState(null);
 
@@ -30,7 +32,7 @@ function Embed() {
   };
 
   if (!post) {
-    return <Loading>Đang tải...</Loading>;
+    return <Loading>{t("common.loading")}</Loading>;
   }
 
   return (
@@ -149,13 +151,16 @@ function Embed() {
       <div className="flex flex-col gap-3 pt-1">
         {post?.created_at && (
           <div className="text-[13px] text-neutral-500">
-            {new Date(post.created_at).toLocaleString("vi-VN", {
-              hour: "2-digit",
-              minute: "2-digit",
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            })}
+            {new Date(post.created_at).toLocaleString(
+              i18n.language?.startsWith("vi") ? "vi-VN" : "en-US",
+              {
+                hour: "2-digit",
+                minute: "2-digit",
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              },
+            )}
           </div>
         )}
 

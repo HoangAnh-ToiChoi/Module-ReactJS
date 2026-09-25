@@ -6,6 +6,7 @@ import App from "~/App.jsx";
 import { store, persistor } from "~/store/store";
 import "~/styles/reset.css";
 import "~/styles/main.css";
+import "~/i18n";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>

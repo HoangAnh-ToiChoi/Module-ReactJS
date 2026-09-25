@@ -1,54 +1,15 @@
 import { ChevronRight, X } from "lucide-react";
 import { Link } from "react-router";
 import { BsThreads } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
-
-const NOTIFICATION_MESSAGES = {
-  like: {
-    title: (
-      <>
-        Bạn thích nội dung này ư?
-        <br />
-        Bạn sẽ thích mê Threads.
-      </>
-    ),
-    description: "Hãy đăng ký để thích, trả lời và hơn thế nữa.",
-  },
-  comment: {
-    title: (
-      <>
-        Bạn muốn trả lời nội dung này?
-        <br />
-        Bạn sẽ thích mê Threads.
-      </>
-    ),
-    description: "Hãy đăng ký để trả lời, thích và hơn thế nữa.",
-  },
-  repost: {
-    title: (
-      <>
-        Bạn muốn đăng lại nội dung này?
-        <br />
-        Bạn sẽ thích mê Threads.
-      </>
-    ),
-    description: "Hãy đăng ký để đăng lại, thích và hơn thế nữa.",
-  },
-  share: {
-    title: (
-      <>
-        Bạn muốn chia sẻ nội dung này?
-        <br />
-        Bạn sẽ thích mê Threads.
-      </>
-    ),
-    description: "Hãy đăng ký để chia sẻ, thích và hơn thế nữa.",
-  },
-};
 
 function NotificationModal({ onClose, icon, type = "", children }) {
   useLockBodyScroll();
-  const message = NOTIFICATION_MESSAGES[type];
+  const { t } = useTranslation();
+
+  const title = t(`notifications.${type}_title`, { defaultValue: "" });
+  const description = t(`notifications.${type}_desc`, { defaultValue: "" });
 
   return (
     <div
@@ -101,12 +62,12 @@ function NotificationModal({ onClose, icon, type = "", children }) {
         <div className="w-full">
           {children || (
             <>
-              <h2 className="px-2 text-[24px] leading-snug font-extrabold tracking-tight text-white sm:text-[26px]">
-                {message.title}
+              <h2 className="whitespace-pre-line px-2 text-[24px] leading-snug font-extrabold tracking-tight text-white sm:text-[26px]">
+                {title}
               </h2>
-              {message.description && (
+              {description && (
                 <p className="mt-2 px-4 text-[14px] leading-relaxed text-neutral-400">
-                  {message.description}
+                  {description}
                 </p>
               )}
             </>
@@ -125,10 +86,10 @@ function NotificationModal({ onClose, icon, type = "", children }) {
               </div>
               <div className="flex flex-col gap-1 text-left">
                 <div className="text-[15px] leading-tight font-semibold text-white">
-                  Đăng nhập vào Threads
+                  {t("auth.login_threads")}
                 </div>
                 <div className="text-[13px] leading-normal text-neutral-400">
-                  Sử dụng tài khoản hoặc email của bạn
+                  {t("auth.use_account")}
                 </div>
               </div>
             </div>
@@ -136,13 +97,13 @@ function NotificationModal({ onClose, icon, type = "", children }) {
           </Link>
 
           <div className="text-center text-[13px] text-neutral-400">
-            Chưa có tài khoản?{" "}
+            {t("auth.no_account")}{" "}
             <Link
               to="/register"
               onClick={onClose}
               className="font-semibold text-white underline-offset-4 hover:underline"
             >
-              Đăng ký ngay
+              {t("auth.register_now")}
             </Link>
           </div>
         </div>

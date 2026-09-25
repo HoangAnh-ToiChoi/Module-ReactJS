@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 
 function DeleteModal({ post, onClose, onSubmit }) {
   useLockBodyScroll();
+  const { t } = useTranslation();
 
   const handleDeleting = async () => {
     try {
@@ -26,10 +28,10 @@ function DeleteModal({ post, onClose, onSubmit }) {
       >
         <div className="p-6 pb-5 text-center">
           <h2 className="mb-2 text-[17px] font-bold text-white">
-            Xóa bài viết?
+            {t("post.delete_title")}
           </h2>
           <p className="px-1 text-[14px] leading-relaxed text-neutral-400">
-            Nếu xóa bài viết này, bạn sẽ không khôi phục được nữa.
+            {t("post.delete_desc")}
           </p>
         </div>
 
@@ -39,14 +41,14 @@ function DeleteModal({ post, onClose, onSubmit }) {
             onClick={onClose}
             className="cursor-pointer border-r border-[#2e2e2e] py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-neutral-800/50 active:scale-95"
           >
-            Hủy
+            {t("common.cancel")}
           </button>
           <button
             type="button"
             onClick={handleDeleting}
             className="cursor-pointer py-3.5 text-[15px] font-bold text-red-500 transition-colors hover:bg-neutral-800/50 active:scale-95 disabled:opacity-50"
           >
-            Xóa
+            {t("common.delete")}
           </button>
         </div>
       </div>

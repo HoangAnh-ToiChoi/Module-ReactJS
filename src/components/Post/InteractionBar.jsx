@@ -27,10 +27,12 @@ import NotificationModal from "./components/Modals/NotificationModal";
 import { cn } from "~/lib/utils";
 import useAutoPosition from "~/hooks/useAutoPosition";
 import { useSelectorUser } from "~/features/Auth/Hook";
+import { useTranslation } from "react-i18next";
 
 function InteractionBar({ repliesCount = 0, post }) {
   const dispatch = useDispatch();
   const currentUser = useSelectorUser();
+  const { t } = useTranslation();
   const isAuth = Boolean(currentUser || localStorage.getItem("accessToken"));
 
   const [isOpenMenu, setOpenMenu] = useState(false);
@@ -200,7 +202,7 @@ function InteractionBar({ repliesCount = 0, post }) {
               className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232]"
               onClick={handleRepost}
             >
-              <span>{repost.Active ? "Xoá đăng lại" : "Đăng lại"}</span>
+              <span>{repost.Active ? t("common.remove_repost") : t("common.repost")}</span>
               <Repeat2 className="h-4 w-4 text-[#f3f5f7]" />
             </button>
 
@@ -209,7 +211,7 @@ function InteractionBar({ repliesCount = 0, post }) {
               className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#f3f5f7] transition-colors hover:bg-[#323232]"
               onClick={handleQuoteModal}
             >
-              <span>Trích dẫn</span>
+              <span>{t("common.quote")}</span>
               <MessageSquareQuote className="h-4 w-4 text-[#f3f5f7]" />
             </button>
           </div>

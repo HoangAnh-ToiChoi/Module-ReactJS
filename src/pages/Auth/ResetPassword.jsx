@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CircleAlert, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@base-ui/react/button";
 import { Input } from "@base-ui/react/input";
@@ -23,6 +24,7 @@ import {
 } from "~/components/ui/alert-dialog";
 
 function ResetPassword() {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -120,13 +122,13 @@ function ResetPassword() {
     >
       {isSubmitting && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#181818]/80 backdrop-blur-xs">
-          <Loading>Đang cập nhật mật khẩu...</Loading>
+          <Loading>{t("auth.updating_password")}</Loading>
         </div>
       )}
 
       {isLoading && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#181818]/80 backdrop-blur-xs">
-          <Loading>Đang xác thực liên kết...</Loading>
+          <Loading>{t("auth.authenticating_link")}</Loading>
         </div>
       )}
 
@@ -139,10 +141,10 @@ function ResetPassword() {
 
       <div className="mb-2 text-center">
         <h1 className="text-xl font-bold tracking-tight text-white">
-          Tạo mật khẩu mới
+          {t("auth.reset_password_title")}
         </h1>
         <p className="mt-1 text-[13px] text-neutral-400">
-          Nhập mật khẩu mới cho tài khoản của bạn để tiếp tục
+          {t("auth.reset_password_subtitle")}
         </p>
       </div>
 
@@ -151,7 +153,7 @@ function ResetPassword() {
           {...register("password")}
           aria-invalid={!!errors.password}
           type="password"
-          placeholder="Mật khẩu mới"
+          placeholder={t("auth.new_password_placeholder")}
           className="h-11 rounded-lg border-[#333333] bg-[#101010] px-3.5 py-3 text-[14px] text-white placeholder-neutral-500 focus-visible:border-neutral-400 focus-visible:ring-0"
         />
         {errors.password && (
@@ -166,7 +168,7 @@ function ResetPassword() {
           {...register("password_confirmation")}
           aria-invalid={!!errors.password_confirmation}
           type="password"
-          placeholder="Xác nhận mật khẩu mới"
+          placeholder={t("auth.confirm_new_password_placeholder")}
           className="h-11 rounded-lg border-[#333333] bg-[#101010] px-3.5 py-3 text-[14px] text-white placeholder-neutral-500 focus-visible:border-neutral-400 focus-visible:ring-0"
         />
         {errors.password_confirmation && (
@@ -187,16 +189,16 @@ function ResetPassword() {
         disabled={isSubmitting}
         className="mt-2 w-full rounded-xl bg-white py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Tạo mật khẩu mới
+        {t("auth.reset_password_title")}
       </Button>
 
       <Link
         to="/login"
         className="my-3.5 text-center text-[14px] text-neutral-300 transition-colors hover:text-white"
       >
-        Bạn nhớ mật khẩu?{" "}
+        {t("auth.remember_password")}{" "}
         <span className="font-semibold text-white underline-offset-4 hover:underline">
-          Đăng nhập ngay
+          {t("auth.login_now")}
         </span>
       </Link>
 
@@ -208,11 +210,10 @@ function ResetPassword() {
                 <CircleAlert className="h-7 w-7" />
               </div>
               <AlertDialogTitle className="text-lg font-bold tracking-tight text-white sm:text-xl">
-                Liên kết đã hết hạn hoặc không hợp lệ
+                {t("auth.invalid_or_expired_link")}
               </AlertDialogTitle>
               <AlertDialogDescription className="text-[13px] leading-relaxed text-neutral-400">
-                Đường dẫn đặt lại mật khẩu không còn hiệu lực. Vui lòng yêu cầu
-                một liên kết mới để tiếp tục đặt lại mật khẩu.
+                {t("auth.invalid_or_expired_link_desc")}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="-mx-0 mt-3 -mb-0 border-none bg-transparent p-0 sm:justify-center">
@@ -223,7 +224,7 @@ function ResetPassword() {
                 }}
                 className="h-11 w-full cursor-pointer rounded-xl bg-white text-[14px] font-semibold text-black transition-colors hover:bg-neutral-200 active:scale-[0.98]"
               >
-                Yêu cầu liên kết mới
+                {t("auth.request_new_link")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

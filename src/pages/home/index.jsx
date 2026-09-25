@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import Loading from "~/components/Loading";
 
 import PostCard from "~/components/Post/PostCard";
@@ -23,14 +24,14 @@ import {
 } from "~/service/PostService/PostService";
 
 function Home() {
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [hasMore, setHasmore] = useState(true);
   const [isFetching, setFetching] = useState(false);
   const [reportModalConfig, setReportModalConfig] = useState({
     isOpen: false,
-    title: "Cảm ơn bạn đã đóng góp ý kiến",
-    description:
-      "Khi nhìn thấy nội dung mình không thích trên Threads, bạn có thể báo cáo nếu nội dung đó không tuân thủ Tiêu chuẩn cộng đồng hoặc xóa người chia sẻ nội dung đó khỏi trải nghiệm của mình.",
+    title: "",
+    description: "",
     isError: false,
   });
   const posts = useSelectorPost();
@@ -92,17 +93,16 @@ function Home() {
       await reportPost(postId, data);
       setReportModalConfig({
         isOpen: true,
-        title: "Cảm ơn bạn đã đóng góp ý kiến",
-        description:
-          "Khi nhìn thấy nội dung mình không thích trên Threads, bạn có thể báo cáo nếu nội dung đó không tuân thủ Tiêu chuẩn cộng đồng hoặc xóa người chia sẻ nội dung đó khỏi trải nghiệm của mình.",
+        title: t("report.thank_you_title"),
+        description: t("report.thank_you_desc"),
         isError: false,
       });
     } catch (e) {
       console.error(e);
       setReportModalConfig({
         isOpen: true,
-        title: "Thông báo",
-        description: "Bạn đã báo cáo bài viết này!",
+        title: t("report.already_reported_title"),
+        description: t("report.already_reported_desc"),
         isError: true,
       });
     }
@@ -173,13 +173,13 @@ function Home() {
 
       {isFetching && (
         <div className="flex justify-center py-6">
-          <Loading>Đang tải thêm bài viết...</Loading>
+          <Loading>{t("post.loading_more")}</Loading>
         </div>
       )}
 
       {!hasMore && posts.length > 0 && (
         <p className="py-6 text-center text-[13px] text-neutral-500">
-          Bạn đã xem hết tất cả bài viết.
+          {t("post.seen_all")}
         </p>
       )}
     </div>

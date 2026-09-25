@@ -10,12 +10,14 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import copy from "copy-to-clipboard";
+import { useTranslation } from "react-i18next";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { MOCK_FRIENDS } from "~/data/mockFriends";
 import useLockBodyScroll from "~/hooks/useLockBodyScroll";
 
 function ShareModal({ post, onClose, onOpenCopyImageModal, onOpenEmbedModal }) {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [showNotice, setShowNotice] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -68,11 +70,11 @@ function ShareModal({ post, onClose, onOpenCopyImageModal, onOpenEmbedModal }) {
             onClick={onClose}
             className="cursor-pointer text-[15px] font-medium text-white transition-colors hover:text-neutral-400"
           >
-            Hủy
+            {t("common.cancel")}
           </button>
 
           <h2 className="text-[16px] font-bold tracking-tight text-white">
-            Gửi đến
+            {t("post.send_to")}
           </h2>
 
           <button
@@ -96,7 +98,7 @@ function ShareModal({ post, onClose, onOpenCopyImageModal, onOpenEmbedModal }) {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Tìm kiếm trang cá nhân Threads"
+              placeholder={t("post.search_threads_profile")}
               className="w-full bg-transparent text-[14px] text-white placeholder-neutral-500 outline-none"
             />
           </div>
@@ -104,7 +106,7 @@ function ShareModal({ post, onClose, onOpenCopyImageModal, onOpenEmbedModal }) {
           {showNotice && (
             <div className="mt-3 flex items-center justify-between rounded-2xl border border-[#242424] bg-[#1c1c1c] px-4 py-3">
               <span className="text-[13px] leading-snug text-neutral-300">
-                Giờ đây, bạn có thể nhắn tin cho mọi người ngay trên Threads.
+                {t("post.dm_notice")}
               </span>
               <button
                 type="button"
@@ -166,7 +168,7 @@ function ShareModal({ post, onClose, onOpenCopyImageModal, onOpenEmbedModal }) {
                 <PlusCircle className="h-6 w-6" />
               </div>
               <span className="text-[11.5px] leading-tight font-medium text-neutral-300">
-                Tin trên Instagram
+                {t("post.instagram_story")}
               </span>
             </button>
 
@@ -183,7 +185,7 @@ function ShareModal({ post, onClose, onOpenCopyImageModal, onOpenEmbedModal }) {
                 )}
               </div>
               <span className="text-[11.5px] leading-tight font-medium text-neutral-300">
-                {copied ? "Đã chép" : "Sao chép liên kết"}
+                {copied ? t("common.link_copied") : t("common.copy_link")}
               </span>
             </button>
 
@@ -196,7 +198,7 @@ function ShareModal({ post, onClose, onOpenCopyImageModal, onOpenEmbedModal }) {
                 <ImageIcon className="h-6 w-6" />
               </div>
               <span className="text-[11.5px] leading-tight font-medium text-neutral-300">
-                Sao chép dưới dạng hình ảnh
+                {t("common.copy_as_image")}
               </span>
             </button>
 
@@ -209,7 +211,7 @@ function ShareModal({ post, onClose, onOpenCopyImageModal, onOpenEmbedModal }) {
                 <Globe className="h-6 w-6" />
               </div>
               <span className="text-[11.5px] leading-tight font-medium text-neutral-300">
-                Mã nhúng
+                {t("common.embed")}
               </span>
             </button>
           </div>

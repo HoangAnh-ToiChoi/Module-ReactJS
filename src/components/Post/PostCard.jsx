@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { MoreHorizontal, Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import InteractionBar from "./InteractionBar";
@@ -19,6 +20,7 @@ function PostCard({
   onEdit,
   onDelete,
 }) {
+  const { t } = useTranslation();
   const [openMenu, setOpenMenu] = useState(false);
   const [openReportMenu, setOpenReportMenu] = useState(false);
   const [openEditModal, setOpenEidtModal] = useState(false);
@@ -73,7 +75,7 @@ function PostCard({
 
           <button
             type="button"
-            title="Theo dõi"
+            title={t("post.follow")}
             className="absolute -right-0.5 -bottom-0.5 z-10 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-white text-black ring-2 ring-[#101010] transition-transform hover:scale-110 active:scale-95"
           >
             <Plus className="h-3 w-3 stroke-[3]" />
